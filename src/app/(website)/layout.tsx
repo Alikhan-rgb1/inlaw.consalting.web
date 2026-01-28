@@ -12,6 +12,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://inlaw.kz'),
   title: {
     default: "Inlaw.kz — Регистрация и Сопровождение Международного Бизнеса",
     template: "%s | Inlaw.kz",
