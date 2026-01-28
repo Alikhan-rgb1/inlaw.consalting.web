@@ -7,13 +7,23 @@ const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]`;
 
 const options: FilteredResponseQueryOptions = { next: { revalidate: false } };
 
+export async function generateStaticParams() {
+  return [];
+}
+
 export default async function PostPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = await client.fetch<SanityDocument>(POST_QUERY, { slug }, options);
+  let post = null;
+
+  try {
+    post = await client.fetch<SanityDocument>(POST_QUERY, { slug }, options);
+  } catch (error) {
+    console.error("Error fetching post:", error);
+  }
 
   if (!post) {
     notFound();
