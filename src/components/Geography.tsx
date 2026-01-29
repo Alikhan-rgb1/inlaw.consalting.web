@@ -41,15 +41,15 @@ const locationConfig: LocationConfig[] = [
   },
   {
     id: 'uae',
-    top: '75%',
-    left: '27%',
+    top: '68.5%',
+    left: '27.5%',
     address: 'IFZA Business Park - Building A2 - Nadd Hessa - Dubai Silicon Oasis - Dubai - UAE',
     phones: ['+971523524196'],
     cardPosition: 'top'
   },
   {
     id: 'cn',
-    top: '62.5%',
+    top: '60%',
     left: '88%',
     address: '上海市闵行区金丰路555弄9R 103 JinFeng RD 555. 9R. 103. Shanghai. China',
     phones: ['+8613918719943'],
@@ -118,7 +118,7 @@ export default function Geography() {
   const activeLocation = locations.find(l => l.id === hoveredId);
 
   return (
-    <section id="jurisdictions" className="relative w-full min-h-screen bg-white overflow-hidden flex flex-col items-center justify-center py-20">
+    <section id="jurisdictions" className="relative w-full bg-white overflow-hidden flex flex-col items-center justify-center pt-20 pb-0">
       
       <div className="text-center mb-8 z-10 relative px-4">
         <motion.h2 
@@ -149,7 +149,7 @@ export default function Geography() {
         className="relative w-full overflow-hidden flex justify-center items-center"
       >
         {/* Inner wrapper */}
-        <div className="relative w-[120%] sm:w-full aspect-[1000/605] max-w-[1400px] md:scale-110 translate-y-4">
+        <div className="relative w-full aspect-[1000/605] max-w-[1400px] md:scale-110 mt-4 md:mt-10">
            {/* Map Image - Light Style */}
            <Image 
              src="/custom-map.svg"
@@ -169,8 +169,16 @@ export default function Geography() {
                key={loc.id}
                className="absolute z-20"
                style={{ top: loc.top, left: loc.left }}
-               onMouseEnter={() => setHoveredId(loc.id)}
-               onMouseLeave={() => setHoveredId(null)}
+               onMouseEnter={() => {
+                  if (window.matchMedia('(min-width: 768px)').matches) {
+                    setHoveredId(loc.id);
+                  }
+               }}
+               onMouseLeave={() => {
+                  if (window.matchMedia('(min-width: 768px)').matches) {
+                    setHoveredId(null);
+                  }
+               }}
                onClick={(e) => {
                  e.stopPropagation();
                  setHoveredId(isSelected ? null : loc.id);
