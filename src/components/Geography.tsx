@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 
 interface LocationConfig {
@@ -104,7 +104,18 @@ export default function Geography() {
     };
   };
 
+  const getCardPositionClasses = (position?: string) => {
+    switch (position) {
+      case 'left': return 'right-full mr-4 top-1/2 -translate-y-1/2 origin-right left-auto bottom-auto';
+      case 'right': return 'left-full ml-4 top-1/2 -translate-y-1/2 origin-left right-auto bottom-auto';
+      case 'bottom': return 'left-1/2 -translate-x-1/2 top-full mt-4 origin-top bottom-auto';
+      case 'top':
+      default: return 'left-1/2 -translate-x-1/2 bottom-full mb-4 origin-bottom top-auto';
+    }
+  };
+
   const locations = locationConfig.map(getLocalizedLocation);
+  const activeLocation = locations.find(l => l.id === hoveredId);
 
   return (
     <section id="jurisdictions" className="relative w-full min-h-screen bg-white overflow-hidden flex flex-col items-center justify-center py-20">
@@ -135,22 +146,24 @@ export default function Geography() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8, delay: 0.2 }}
-        className="relative w-full overflow-hidden"
+        className="relative w-full overflow-hidden flex justify-center items-center"
       >
         {/* Inner wrapper */}
-        <div className="relative w-full aspect-[1000/500] min-h-[350px] max-w-[1400px] mx-auto scale-125 sm:scale-110 translate-y-4">
+        <div className="relative w-[120%] sm:w-full aspect-[1000/605] max-w-[1400px] md:scale-110 translate-y-4">
            {/* Map Image - Light Style */}
            <Image 
              src="/custom-map.svg"
              alt="Eurasia Map"
              fill
-             className="object-cover object-[50%_35%]"
+             className="object-contain"
              priority
            />
            
            {/* Markers */}
            {locations.map((loc) => {
              const isMain = loc.id === 'kz';
+             const isSelected = hoveredId === loc.id;
+             
              return (
              <div 
                key={loc.id}
@@ -158,34 +171,33 @@ export default function Geography() {
                style={{ top: loc.top, left: loc.left }}
                onMouseEnter={() => setHoveredId(loc.id)}
                onMouseLeave={() => setHoveredId(null)}
+               onClick={(e) => {
+                 e.stopPropagation();
+                 setHoveredId(isSelected ? null : loc.id);
+               }}
              >
                {/* Pulse Effect */}
-               <div className="absolute -inset-4 bg-indigo-500/20 rounded-full blur-xl opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
+               <div className="absolute -inset-4 bg-indigo-500/20 rounded-full blur-xl opacity-0 hover:opacity-100 transition-opacity duration-500 hidden md:block"></div>
 
                {/* Marker Visual */}
-               <div className={`relative flex items-center justify-center -translate-x-1/2 -translate-y-1/2 cursor-pointer group ${isMain ? 'w-8 h-8' : 'w-4 h-4'}`}>
-                  <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-20 bg-[#2E447A]`}></span>
-                  <span className={`relative inline-flex rounded-full transition-all duration-300 ${isMain ? 'h-5 w-5' : 'h-2.5 w-2.5'} ${hoveredId === loc.id ? 'bg-[#1e3a8a]' : 'bg-[#2E447A]'}`}></span>
+               <div className={`relative flex items-center justify-center -translate-x-1/2 -translate-y-1/2 cursor-pointer group ${isMain ? 'w-6 h-6 md:w-8 md:h-8' : 'w-3 h-3 md:w-4 md:h-4'}`}>
+                  <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-20 bg-[#2E447A] ${isSelected ? 'opacity-40' : ''}`}></span>
+                  <span className={`relative inline-flex rounded-full transition-all duration-300 ${isMain ? 'h-4 w-4 md:h-5 md:w-5' : 'h-2 w-2 md:h-2.5 md:w-2.5'} ${isSelected ? 'bg-[#1e3a8a] scale-125' : 'bg-[#2E447A]'}`}></span>
                </div>
                
-               {/* Hover Card Conditional Positioning */}
+               {/* Desktop Hover Card (Hidden on Mobile) */}
                <div className={`
-                 absolute z-50 w-72 
+                 hidden md:block absolute w-72
+                 ${getCardPositionClasses(loc.cardPosition)}
                  bg-white/95 backdrop-blur-md border border-slate-200/60 rounded-xl p-5 shadow-[0_8px_30px_rgb(0,0,0,0.12)]
                  transition-all duration-300 ease-out
-                 ${hoveredId === loc.id ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}
-                 ${loc.cardPosition === 'left' ? 'right-full mr-4 top-1/2 -translate-y-1/2 origin-right' : ''}
-                 ${loc.cardPosition === 'right' ? 'left-full ml-4 top-1/2 -translate-y-1/2 origin-left' : ''}
-                 ${loc.cardPosition === 'top' ? 'left-1/2 -translate-x-1/2 bottom-full mb-4 origin-bottom' : ''}
-                 ${loc.cardPosition === 'bottom' ? 'left-1/2 -translate-x-1/2 top-full mt-4 origin-top' : ''}
-                 ${!loc.cardPosition ? 'left-1/2 -translate-x-1/2 bottom-full mb-4 origin-bottom' : ''}
+                 ${isSelected ? 'opacity-100 scale-100 translate-y-0 visible' : 'opacity-0 scale-95 translate-y-4 invisible pointer-events-none'}
                `}>
                  <div className="flex items-center justify-between mb-3 pb-3 border-b border-slate-100">
                     <div>
                       <h3 className="text-base font-bold text-slate-900 leading-none mb-1">{loc.title}</h3>
                       <span className="text-[10px] text-indigo-600 uppercase tracking-wider font-bold">{loc.country}</span>
                     </div>
-                    {/* Flag or Icon placeholder could go here */}
                  </div>
 
                  {/* Services */}
@@ -245,6 +257,107 @@ export default function Geography() {
           })}
         </div>
       </motion.div>
+
+      {/* Mobile Bottom Sheet */}
+      <AnimatePresence>
+        {activeLocation && (
+          <>
+            {/* Backdrop */}
+            <motion.div 
+              className="md:hidden fixed inset-0 z-40 bg-black/30 backdrop-blur-sm"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setHoveredId(null)}
+            />
+            
+            {/* Sheet */}
+            <motion.div
+              className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white rounded-t-3xl p-6 shadow-[0_-8px_30px_rgb(0,0,0,0.12)] border-t border-slate-100 max-h-[80vh] overflow-y-auto"
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              drag="y"
+              dragConstraints={{ top: 0 }}
+              dragElastic={0.2}
+              onDragEnd={(_, info) => {
+                if (info.offset.y > 100) setHoveredId(null);
+              }}
+            >
+               <div className="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-6" />
+               
+               <div className="flex items-center justify-between mb-6">
+                  <div>
+                    <h3 className="text-xl font-bold text-slate-900 leading-tight mb-1">{activeLocation.title}</h3>
+                    <span className="text-xs text-indigo-600 uppercase tracking-wider font-bold">{activeLocation.country}</span>
+                  </div>
+                  <button 
+                    onClick={() => setHoveredId(null)}
+                    className="p-2 bg-slate-100 rounded-full text-slate-500 hover:bg-slate-200 transition-colors"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+               </div>
+
+               {/* Services */}
+               <div className="mb-6">
+                 <p className="text-xs uppercase text-slate-400 font-semibold mb-3 tracking-wide">{t.geography.servicesLabel}</p>
+                 <ul className="grid grid-cols-1 gap-3">
+                   {activeLocation.services.map((service, idx) => (
+                     <li key={idx} className="text-sm text-slate-700 flex items-center gap-3 font-medium bg-slate-50 p-3 rounded-lg">
+                       <span className="w-2 h-2 rounded-full bg-indigo-500 shadow-sm shadow-indigo-500/50"></span>
+                       {service}
+                     </li>
+                   ))}
+                 </ul>
+               </div>
+
+               {/* Contact Info */}
+               {(activeLocation.address || activeLocation.phones) && (
+                 <div className="pt-6 border-t border-slate-100 space-y-4">
+                   {activeLocation.address && (
+                     <div className="flex gap-3 items-start">
+                       <div className="p-2 bg-indigo-50 text-indigo-600 rounded-lg shrink-0">
+                         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                         </svg>
+                       </div>
+                       <div>
+                         <p className="text-xs text-slate-400 font-semibold uppercase mb-1">Address</p>
+                         <p className="text-sm text-slate-600 leading-snug">{activeLocation.address}</p>
+                       </div>
+                     </div>
+                   )}
+                   
+                   {activeLocation.phones && activeLocation.phones.length > 0 && (
+                     <div className="flex gap-3 items-start">
+                       <div className="p-2 bg-indigo-50 text-indigo-600 rounded-lg shrink-0">
+                         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                         </svg>
+                       </div>
+                       <div>
+                         <p className="text-xs text-slate-400 font-semibold uppercase mb-1">Phone</p>
+                         <div className="flex flex-col gap-1">
+                           {activeLocation.phones.map((phone, idx) => (
+                             <a key={idx} href={`tel:${phone.replace(/\s+/g, '')}`} className="text-sm text-slate-600 hover:text-indigo-600 font-medium transition-colors block">
+                               {phone}
+                             </a>
+                           ))}
+                         </div>
+                       </div>
+                     </div>
+                   )}
+                 </div>
+               )}
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
