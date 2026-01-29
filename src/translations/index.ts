@@ -13,7 +13,7 @@ export const translations = {
     hero: {
       title: 'Registration and Support of International Business',
       subtitle: 'in Kazakhstan, UAE, Kyrgyzstan, and Shanghai',
-      description: 'We open companies, bank accounts, and licenses. We provide full legal and corporate management for businesses in these jurisdictions.',
+      description: 'Company registration, support for opening bank accounts, and licensing. Provision of a full range of legal and corporate services for business management in these jurisdictions.',
       aifc: 'AIFC (Astana International Financial Centre)',
       dubai: 'Dubai Free Zones & Mainland',
       bishkek: 'Bishkek & Central Asia',
@@ -641,7 +641,7 @@ export const translations = {
     hero: {
       title: 'Регистрация и Сопровождение Международного Бизнеса',
       subtitle: 'в Казахстане, ОАЭ, Кыргызстане и Шанхае',
-      description: 'Мы открываем компании, банковские счета и лицензии. Обеспечиваем полное юридическое и корпоративное управление бизнесом в этих юрисдикциях.',
+      description: 'Регистрация компаний, сопровождение открытия банковских счетов и оформление лицензий. Предоставление полного спектра юридических и корпоративных услуг по управлению бизнесом в данных юрисдикциях.',
       aifc: 'МФЦА (Международный Финансовый Центр Астана)',
       dubai: 'Свободные зоны и Мейнленд Дубая',
       bishkek: 'Бишкек и Центральная Азия',
