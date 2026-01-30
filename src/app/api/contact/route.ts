@@ -3,7 +3,7 @@ import nodemailer from 'nodemailer';
 
 export async function POST(req: Request) {
   try {
-    const { name, email, phone, country, message } = await req.json();
+    const { name, email, phone, country, message, url } = await req.json();
 
     const text = `
 Name: ${name}
@@ -11,7 +11,7 @@ Email: ${email}
 Phone: ${phone}
 Country: ${country}
 Message: ${message}
-link - inlaw.consulting
+link - ${url || 'inlaw.consulting'}
     `;
 
     // 1. Send to Telegram
