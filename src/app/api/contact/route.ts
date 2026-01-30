@@ -11,7 +11,7 @@ Email: ${email}
 Phone: ${phone}
 Country: ${country}
 Message: ${message}
-Link: inlaw.consulting
+link - inlaw.consulting
     `;
 
     // 1. Send to Telegram
