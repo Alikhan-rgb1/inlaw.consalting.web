@@ -191,6 +191,11 @@ export const translations = {
             name: 'Alikhan Serikov',
             role: 'Software Engineer',
             description: 'Expert in digital transformation and IT solution implementation. Leading the development of internal products and business process automation.'
+          },
+          asel: {
+            name: 'Asel Kozhakhmetova',
+            role: 'Business Consultant',
+            description: 'Business consultant with 15 years of professional experience: 12 years in China and 3 years in Dubai. Fluent in Chinese, English, Russian, and Kazakh.'
           }
         }
       },
@@ -819,6 +824,11 @@ export const translations = {
           name: 'Алихан Сериков',
           role: 'Software Engineer',
           description: 'Эксперт по цифровой трансформации и внедрению IT-решений. Руководит разработкой внутренних продуктов и автоматизацией бизнес-процессов.'
+        },
+        asel: {
+          name: 'Асель Кожахметова',
+          role: 'Бизнес-консультант',
+          description: 'Бизнес-консультант с 15-летним профессиональным опытом: 12 лет работы в Китае и 3 года в Дубае. Свободно владеет китайским, английским, русским и казахским языками.'
         }
       }
     },
@@ -1447,6 +1457,11 @@ export const translations = {
           name: 'Alikhan Serikov',
           role: '软件工程师',
           description: '数字化转型和 IT 解决方案实施专家。领导内部产品开发和业务流程自动化。'
+        },
+        asel: {
+          name: 'Asel Kozhakhmetova',
+          role: '商业顾问',
+          description: '拥有15年专业经验的商业顾问：在中国工作12年，在迪拜工作3年。精通中文、英语、俄语和哈萨克语。'
         }
       }
     },

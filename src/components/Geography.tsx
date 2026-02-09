@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -235,24 +236,40 @@ export default function Geography() {
                      )}
                      
                      {loc.phones && loc.phones.length > 0 && (
-                       <div className="flex gap-2 items-start group/phone">
-                         <svg className="w-3.5 h-3.5 text-slate-400 mt-0.5 shrink-0 group-hover/phone:text-indigo-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                         </svg>
-                         <div className="flex flex-col gap-0.5">
-                           {loc.phones.map((phone, idx) => (
-                             <a key={idx} href={`tel:${phone.replace(/\s+/g, '')}`} className="text-xs text-slate-600 hover:text-indigo-600 font-medium transition-colors block">
-                               {phone}
-                             </a>
-                           ))}
-                         </div>
-                       </div>
-                     )}
-                   </div>
-                 )}
-                 {/* Arrow */}
-                 <div className={`
-                   absolute w-0 h-0 border-[6px] border-transparent
+                      <div className="flex gap-2 items-start group/phone">
+                        <svg className="w-3.5 h-3.5 text-slate-400 mt-0.5 shrink-0 group-hover/phone:text-indigo-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                        <div className="flex flex-col gap-0.5">
+                          {loc.phones.map((phone, idx) => (
+                            <a key={idx} href={`tel:${phone.replace(/\s+/g, '')}`} className="text-xs text-slate-600 hover:text-indigo-600 font-medium transition-colors block">
+                              {phone}
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+                
+                {/* Dubai Portal Button */}
+                {loc.id === 'uae' && (
+                  <div className="pt-3 mt-3 border-t border-slate-100">
+                    <Link 
+                      href="/dubai"
+                      className="flex items-center justify-center w-full px-4 py-2 text-xs font-bold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors gap-2 group/btn"
+                    >
+                      <span>Client Portal</span>
+                      <svg className="w-3 h-3 group-hover/btn:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                    </Link>
+                  </div>
+                )}
+
+                {/* Arrow */}
+                <div className={`
+                  absolute w-0 h-0 border-[6px] border-transparent
                    ${loc.cardPosition === 'left' ? 'left-full top-1/2 -translate-y-1/2 border-l-white/95' : ''}
                    ${loc.cardPosition === 'right' ? 'right-full top-1/2 -translate-y-1/2 border-r-white/95' : ''}
                    ${loc.cardPosition === 'top' ? 'top-full left-1/2 -translate-x-1/2 border-t-white/95' : ''}
@@ -360,6 +377,22 @@ export default function Geography() {
                        </div>
                      </div>
                    )}
+
+                  {/* Dubai Portal Button (Mobile) */}
+                  {activeLocation.id === 'uae' && (
+                    <div className="pt-4">
+                      <Link 
+                        href="/dubai"
+                        className="flex items-center justify-center w-full px-6 py-3.5 text-sm font-bold text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 active:scale-[0.98] transition-all gap-2 shadow-lg shadow-indigo-500/30"
+                      >
+                        <span>Client Portal</span>
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                      </Link>
+                    </div>
+                  )}
+
                  </div>
                )}
             </motion.div>
