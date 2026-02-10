@@ -198,7 +198,7 @@ export const translations = {
             description: 'Business consultant with 15 years of professional experience: 12 years in China and 3 years in Dubai. Fluent in Chinese, English, Russian, and Kazakh.'
           },
           azamat: {
-            name: 'Azamat Dysenbai',
+            name: 'Azamat Duisenbai',
             role: 'Official Representative in Almaty',
             description: 'Official Representative of INLAW in Almaty. Expert in obtaining permits and authorizations, as well as in the registration of intellectual property objects.'
           }
@@ -836,8 +836,8 @@ export const translations = {
           description: 'Бизнес-консультант с 15-летним профессиональным опытом: 12 лет работы в Китае и 3 года в Дубае. Свободно владеет китайским, английским, русским и казахским языками.'
         },
         azamat: {
-          name: 'Азамат',
-          role: 'Официальный представитель в Алматы',
+            name: 'Азамат Дуйсенбай',
+            role: 'Официальный представитель в Алматы',
           description: 'Официальный представитель INLAW в Алматы. Эксперт по получению разрешительных документов, а также регистрации объектов интеллектуальной собственности.'
         }
       }
@@ -1474,8 +1474,8 @@ export const translations = {
           description: '拥有15年专业经验的商业顾问：在中国工作12年，在迪拜工作3年。精通中文、英语、俄语和哈萨克语。'
         },
         azamat: {
-          name: 'Azamat',
-          role: '阿拉木图官方代表',
+            name: 'Azamat Duisenbai',
+            role: '阿拉木图官方代表',
           description: 'INLAW 阿拉木图官方代表。擅长获取许可和授权，以及知识产权对象的注册。'
         }
       }
