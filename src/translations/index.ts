@@ -198,7 +198,7 @@ export const translations = {
             description: 'Business consultant with 15 years of professional experience: 12 years in China and 3 years in Dubai. Fluent in Chinese, English, Russian, and Kazakh.'
           },
           azamat: {
-            name: 'Azamat',
+            name: 'Azamat Dysenbai',
             role: 'Official Representative in Almaty',
             description: 'Official Representative of INLAW in Almaty. Expert in obtaining permits and authorizations, as well as in the registration of intellectual property objects.'
           }
