@@ -12,7 +12,8 @@ interface LocationConfig {
   left: string;
   address?: string;
   phones?: string[];
-  cardPosition?: 'top' | 'bottom' | 'left' | 'right';
+  cardPosition?: 'top' | 'bottom' | 'left' | 'right' | 'left-up';
+  labelPosition?: 'top' | 'bottom' | 'left' | 'right';
 }
 
 const locationConfig: LocationConfig[] = [
@@ -30,7 +31,8 @@ const locationConfig: LocationConfig[] = [
     left: '47.14%',
     address: '303 Baizakov St',
     phones: ['+77780008872 '],
-    cardPosition: 'bottom'
+    cardPosition: 'bottom',
+    labelPosition: 'right'
   },
   {
     id: 'kg',
@@ -38,7 +40,8 @@ const locationConfig: LocationConfig[] = [
     left: '45.06%',
     address: '109/1 Turusbekov St, office 508',
     phones: ['+996999100588'],
-    cardPosition: 'bottom'
+    cardPosition: 'bottom',
+    labelPosition: 'left'
   },
   {
     id: 'uae',
@@ -54,7 +57,8 @@ const locationConfig: LocationConfig[] = [
     left: '88%',
     address: '上海市闵行区金丰路555弄9R 103 JinFeng RD 555. 9R. 103. Shanghai. China',
     phones: ['+8613918719943'],
-    cardPosition: 'left'
+    cardPosition: 'left-up',
+    labelPosition: 'top'
   },
 ];
 
@@ -108,6 +112,7 @@ export default function Geography() {
   const getCardPositionClasses = (position?: string) => {
     switch (position) {
       case 'left': return 'right-full mr-4 top-1/2 -translate-y-1/2 origin-right left-auto bottom-auto';
+      case 'left-up': return 'right-full mr-4 bottom-[-10px] origin-bottom-right left-auto top-auto';
       case 'right': return 'left-full ml-4 top-1/2 -translate-y-1/2 origin-left right-auto bottom-auto';
       case 'bottom': return 'left-1/2 -translate-x-1/2 top-full mt-4 origin-top bottom-auto';
       case 'top':
@@ -168,7 +173,7 @@ export default function Geography() {
              return (
              <div 
                key={loc.id}
-               className="absolute z-20"
+               className={`absolute ${isSelected ? 'z-50' : 'z-20'}`}
                style={{ top: loc.top, left: loc.left }}
                onMouseEnter={() => {
                   if (window.matchMedia('(min-width: 768px)').matches) {
@@ -189,14 +194,41 @@ export default function Geography() {
                <div className="absolute -inset-4 bg-indigo-500/20 rounded-full blur-xl opacity-0 hover:opacity-100 transition-opacity duration-500 hidden md:block"></div>
 
                {/* Marker Visual */}
-               <div className={`relative flex items-center justify-center -translate-x-1/2 -translate-y-1/2 cursor-pointer group ${isMain ? 'w-6 h-6 md:w-8 md:h-8' : 'w-3 h-3 md:w-4 md:h-4'}`}>
+               <div className={`relative flex items-center justify-center -translate-x-1/2 -translate-y-1/2 cursor-pointer group w-6 h-6 md:w-8 md:h-8`}>
                   <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-20 bg-[#2E447A] ${isSelected ? 'opacity-40' : ''}`}></span>
-                  <span className={`relative inline-flex rounded-full transition-all duration-300 ${isMain ? 'h-4 w-4 md:h-5 md:w-5' : 'h-2 w-2 md:h-2.5 md:w-2.5'} ${isSelected ? 'bg-[#1e3a8a] scale-125' : 'bg-[#2E447A]'}`}></span>
+                  <span className={`relative inline-flex rounded-full transition-all duration-300 h-4 w-4 md:h-5 md:w-5 ${isSelected ? 'bg-[#1e3a8a] scale-125' : 'bg-[#2E447A]'}`}></span>
+                  
+                  {/* Label with dynamic positioning */}
+                   <div className={`
+                     absolute whitespace-nowrap z-30 pointer-events-none transition-opacity duration-200
+                     ${isSelected ? 'opacity-0' : 'opacity-100'}
+                     ${loc.labelPosition === 'left' ? 'right-full mr-3 top-1/2 -translate-y-1/2' : ''}
+                     ${loc.labelPosition === 'right' ? 'left-full ml-3 top-1/2 -translate-y-1/2' : ''}
+                     ${loc.labelPosition === 'top' ? 'bottom-full mb-3 left-1/2 -translate-x-1/2' : ''}
+                     ${!loc.labelPosition || loc.labelPosition === 'bottom' ? 'top-full mt-3 left-1/2 -translate-x-1/2' : ''}
+                   `}>
+                    <span className={`
+                      text-xs md:text-sm font-bold px-2.5 py-1 rounded-md shadow-sm backdrop-blur-md border transition-all duration-300
+                      ${isSelected 
+                        ? 'bg-indigo-600 text-white border-indigo-500/50 shadow-indigo-500/20' 
+                        : 'bg-white/90 text-slate-700 border-slate-200/50 hover:bg-white'}
+                    `}>
+                      {loc.title}
+                    </span>
+                    
+                    {/* Connector Line for Side Labels */}
+                    {(loc.labelPosition === 'left' || loc.labelPosition === 'right') && (
+                      <span className={`
+                        absolute top-1/2 -translate-y-1/2 w-3 h-[1px] bg-slate-300/50
+                        ${loc.labelPosition === 'left' ? '-right-3' : '-left-3'}
+                      `}></span>
+                    )}
+                  </div>
                </div>
                
                {/* Desktop Hover Card (Hidden on Mobile) */}
                <div className={`
-                 hidden md:block absolute w-72
+                 hidden md:block absolute w-72 z-50
                  ${getCardPositionClasses(loc.cardPosition)}
                  bg-white/95 backdrop-blur-md border border-slate-200/60 rounded-xl p-5 shadow-[0_8px_30px_rgb(0,0,0,0.12)]
                  transition-all duration-300 ease-out
@@ -271,6 +303,7 @@ export default function Geography() {
                 <div className={`
                   absolute w-0 h-0 border-[6px] border-transparent
                    ${loc.cardPosition === 'left' ? 'left-full top-1/2 -translate-y-1/2 border-l-white/95' : ''}
+                   ${loc.cardPosition === 'left-up' ? 'left-full bottom-[14px] border-l-white/95' : ''}
                    ${loc.cardPosition === 'right' ? 'right-full top-1/2 -translate-y-1/2 border-r-white/95' : ''}
                    ${loc.cardPosition === 'top' ? 'top-full left-1/2 -translate-x-1/2 border-t-white/95' : ''}
                    ${loc.cardPosition === 'bottom' ? 'bottom-full left-1/2 -translate-x-1/2 border-b-white/95' : ''}

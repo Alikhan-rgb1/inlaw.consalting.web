@@ -50,6 +50,12 @@ const Team = () => {
       role: members.asel.role,
       description: members.asel.description,
       image: "/Asel.jpeg"
+    },
+    {
+      name: members.azamat.name,
+      role: members.azamat.role,
+      description: members.azamat.description,
+      image: "/Azamat.jpeg"
     }
   ];
 

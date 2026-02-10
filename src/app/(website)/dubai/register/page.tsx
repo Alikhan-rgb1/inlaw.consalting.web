@@ -105,7 +105,7 @@ export default function RegisterPage() {
               <label className="block text-sm font-medium text-slate-700">Company Name</label>
               <input
                 {...register('companyName')}
-                className="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
               />
               {errors.companyName && <p className="mt-1 text-xs text-red-600">{errors.companyName.message}</p>}
             </div>
@@ -114,7 +114,7 @@ export default function RegisterPage() {
               <label className="block text-sm font-medium text-slate-700">Full Name</label>
               <input
                 {...register('fullName')}
-                className="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
               />
               {errors.fullName && <p className="mt-1 text-xs text-red-600">{errors.fullName.message}</p>}
             </div>
@@ -124,7 +124,7 @@ export default function RegisterPage() {
               <input
                 type="email"
                 {...register('email')}
-                className="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
               />
               {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email.message}</p>}
             </div>
@@ -134,7 +134,7 @@ export default function RegisterPage() {
                 <label className="block text-sm font-medium text-slate-700">Phone</label>
                 <input
                   {...register('phone')}
-                  className="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
                 />
                 {errors.phone && <p className="mt-1 text-xs text-red-600">{errors.phone.message}</p>}
               </div>
@@ -142,7 +142,7 @@ export default function RegisterPage() {
                 <label className="block text-sm font-medium text-slate-700">Country</label>
                 <input
                   {...register('country')}
-                  className="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
                 />
                 {errors.country && <p className="mt-1 text-xs text-red-600">{errors.country.message}</p>}
               </div>
@@ -153,7 +153,7 @@ export default function RegisterPage() {
               <input
                 type="password"
                 {...register('password')}
-                className="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
               />
               {errors.password && <p className="mt-1 text-xs text-red-600">{errors.password.message}</p>}
             </div>
