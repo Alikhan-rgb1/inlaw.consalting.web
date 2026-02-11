@@ -47,9 +47,17 @@ export async function GET(request: Request) {
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
+    // Fetch Applications
+    const { data: applications } = await supabaseAdmin
+        .from('applications')
+        .select('*')
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false });
+
     return NextResponse.json({ 
         documents: documents || [],
-        profile: profile || null
+        profile: profile || null,
+        applications: applications || []
     });
 
   } catch (error: any) {

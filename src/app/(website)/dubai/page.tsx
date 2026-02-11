@@ -1,10 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+
+import Image from 'next/image';
+
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function DubaiLoginPage() {
   const [email, setEmail] = useState('');
@@ -12,6 +16,53 @@ export default function DubaiLoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const router = useRouter();
+  const { language } = useLanguage();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const translations = {
+    EN: {
+      title: 'Dubai Office Portal',
+      subtitle: 'Secure Client Access',
+      email: 'Email address',
+      password: 'Password',
+      signIn: 'Sign in',
+      signingIn: 'Signing in...',
+      newClient: 'New client?',
+      register: 'Register Account',
+      error: 'Invalid credentials',
+      generalError: 'An error occurred'
+    },
+    RU: {
+      title: 'Портал офиса в Дубае',
+      subtitle: 'Безопасный вход для клиентов',
+      email: 'Email адрес',
+      password: 'Пароль',
+      signIn: 'Войти',
+      signingIn: 'Вход...',
+      newClient: 'Новый клиент?',
+      register: 'Зарегистрироваться',
+      error: 'Неверные данные для входа',
+      generalError: 'Произошла ошибка'
+    },
+    CHI: {
+      title: '迪拜办事处门户',
+      subtitle: '安全客户访问',
+      email: '电子邮件地址',
+      password: '密码',
+      signIn: '登录',
+      signingIn: '登录中...',
+      newClient: '新客户？',
+      register: '注册账户',
+      error: '凭据无效',
+      generalError: '发生错误'
+    }
+  };
+
+  const t = translations[language];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,26 +77,40 @@ export default function DubaiLoginPage() {
       });
 
       if (res?.error) {
-        setError('Invalid credentials');
+        setError(t.error);
         setLoading(false);
       } else {
         router.push('/dashboard');
         router.refresh();
       }
     } catch (err) {
-      setError('An error occurred');
+      setError(t.generalError);
       setLoading(false);
     }
   };
 
+  if (!mounted) {
+    return null;
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col justify-center py-12 pt-28 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-slate-900">
-          Dubai Office Portal
+        <div className="flex justify-center mb-6">
+          <div className="relative w-20 h-20 rounded-full overflow-hidden shadow-md border-2 border-white">
+            <Image
+              src="/logo.png"
+              alt="Inlaw.kz Logo"
+              fill
+              className="object-cover"
+            />
+          </div>
+        </div>
+        <h2 className="mt-2 text-center text-3xl font-extrabold text-slate-900">
+          {t.title}
         </h2>
         <p className="mt-2 text-center text-sm text-slate-600">
-          Secure Client Access
+          {t.subtitle}
         </p>
       </div>
 
@@ -60,7 +125,7 @@ export default function DubaiLoginPage() {
             
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-slate-700">
-                Email address
+                {t.email}
               </label>
               <div className="mt-1">
                 <input
@@ -78,7 +143,7 @@ export default function DubaiLoginPage() {
 
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-slate-700">
-                Password
+                {t.password}
               </label>
               <div className="mt-1">
                 <input
@@ -100,7 +165,7 @@ export default function DubaiLoginPage() {
                 disabled={loading}
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {loading ? 'Signing in...' : 'Sign in'}
+                {loading ? t.signingIn : t.signIn}
               </button>
             </div>
           </form>
@@ -112,7 +177,7 @@ export default function DubaiLoginPage() {
               </div>
               <div className="relative flex justify-center text-sm">
                 <span className="px-2 bg-white text-slate-500">
-                  New client?
+                  {t.newClient}
                 </span>
               </div>
             </div>
@@ -122,7 +187,7 @@ export default function DubaiLoginPage() {
                 href="/dubai/register"
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-indigo-600 bg-indigo-50 hover:bg-indigo-100"
               >
-                Register Account
+                {t.register}
               </Link>
             </div>
           </div>

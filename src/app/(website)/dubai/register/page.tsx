@@ -19,12 +19,98 @@ const registerSchema = z.object({
 
 type RegisterForm = z.infer<typeof registerSchema>;
 
+import { useLanguage } from '@/context/LanguageContext';
+
 export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const router = useRouter();
+  const { language } = useLanguage();
 
+  const translations = {
+    EN: {
+      title: 'Client Registration',
+      subtitle: 'Create your Dubai Office portal account',
+      companyName: 'Company Name',
+      fullName: 'Full Name',
+      email: 'Email',
+      phone: 'Phone',
+      country: 'Country',
+      password: 'Password',
+      register: 'Register',
+      creating: 'Creating Account...',
+      alreadyAccount: 'Already have an account? Sign in',
+      successTitle: 'Registration Successful!',
+      successDesc: 'Please check your email to confirm your account. Once confirmed, you can sign in.',
+      backToSignIn: 'Back to Sign In',
+      errors: {
+        companyRequired: "Company name is required",
+        nameRequired: "Full name is required",
+        emailInvalid: "Invalid email address",
+        phoneRequired: "Phone number is required",
+        countryRequired: "Country is required",
+        passwordLength: "Password must be at least 6 characters",
+        failed: 'Registration failed'
+      }
+    },
+    RU: {
+      title: 'Регистрация Клиента',
+      subtitle: 'Создайте аккаунт в портале офиса Дубая',
+      companyName: 'Название Компании',
+      fullName: 'ФИО',
+      email: 'Email',
+      phone: 'Телефон',
+      country: 'Страна',
+      password: 'Пароль',
+      register: 'Зарегистрироваться',
+      creating: 'Создание аккаунта...',
+      alreadyAccount: 'Уже есть аккаунт? Войти',
+      successTitle: 'Регистрация успешна!',
+      successDesc: 'Пожалуйста, проверьте email для подтверждения аккаунта. После подтверждения вы сможете войти.',
+      backToSignIn: 'Вернуться ко входу',
+      errors: {
+        companyRequired: "Название компании обязательно",
+        nameRequired: "ФИО обязательно",
+        emailInvalid: "Неверный email адрес",
+        phoneRequired: "Номер телефона обязателен",
+        countryRequired: "Страна обязательна",
+        passwordLength: "Пароль должен быть не менее 6 символов",
+        failed: 'Ошибка регистрации'
+      }
+    },
+    CHI: {
+      title: '客户注册',
+      subtitle: '创建您的迪拜办事处门户账户',
+      companyName: '公司名称',
+      fullName: '全名',
+      email: '电子邮件',
+      phone: '电话',
+      country: '国家',
+      password: '密码',
+      register: '注册',
+      creating: '正在创建账户...',
+      alreadyAccount: '已有账户？登录',
+      successTitle: '注册成功！',
+      successDesc: '请检查您的电子邮件以确认您的账户。确认后即可登录。',
+      backToSignIn: '返回登录',
+      errors: {
+        companyRequired: "公司名称为必填项",
+        nameRequired: "全名为必填项",
+        emailInvalid: "无效的电子邮件地址",
+        phoneRequired: "电话号码为必填项",
+        countryRequired: "国家为必填项",
+        passwordLength: "密码必须至少6个字符",
+        failed: '注册失败'
+      }
+    }
+  };
+
+  const t = translations[language];
+
+  // We need to recreate the schema inside the component or use a function to get messages based on language
+  // But for simplicity, we'll just use the keys and display translated errors in the UI
+  
   const { register, handleSubmit, formState: { errors } } = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),
   });
@@ -54,7 +140,7 @@ export default function RegisterPage() {
       setSuccess(true);
       // Optional: Automatically sign in or wait for email confirmation
     } catch (err: any) {
-      setError(err.message || 'Registration failed');
+      setError(err.message || t.errors.failed);
     } finally {
       setLoading(false);
     }
@@ -65,15 +151,15 @@ export default function RegisterPage() {
       <div className="min-h-screen bg-slate-50 flex flex-col justify-center py-12 pt-28 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 text-center">
-            <h3 className="text-xl font-medium text-green-600 mb-4">Registration Successful!</h3>
+            <h3 className="text-xl font-medium text-green-600 mb-4">{t.successTitle}</h3>
             <p className="text-slate-600 mb-6">
-              Please check your email to confirm your account. Once confirmed, you can sign in.
+              {t.successDesc}
             </p>
             <Link
               href="/dubai"
               className="inline-flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              Back to Sign In
+              {t.backToSignIn}
             </Link>
           </div>
         </div>
@@ -85,10 +171,10 @@ export default function RegisterPage() {
     <div className="min-h-screen bg-slate-50 flex flex-col justify-center py-12 pt-28 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-slate-900">
-          Client Registration
+          {t.title}
         </h2>
         <p className="mt-2 text-center text-sm text-slate-600">
-          Create your Dubai Office portal account
+          {t.subtitle}
         </p>
       </div>
 
@@ -102,60 +188,60 @@ export default function RegisterPage() {
             )}
 
             <div>
-              <label className="block text-sm font-medium text-slate-700">Company Name</label>
+              <label className="block text-sm font-medium text-slate-700">{t.companyName}</label>
               <input
                 {...register('companyName')}
                 className="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
               />
-              {errors.companyName && <p className="mt-1 text-xs text-red-600">{errors.companyName.message}</p>}
+              {errors.companyName && <p className="mt-1 text-xs text-red-600">{t.errors.companyRequired}</p>}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700">Full Name</label>
+              <label className="block text-sm font-medium text-slate-700">{t.fullName}</label>
               <input
                 {...register('fullName')}
                 className="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
               />
-              {errors.fullName && <p className="mt-1 text-xs text-red-600">{errors.fullName.message}</p>}
+              {errors.fullName && <p className="mt-1 text-xs text-red-600">{t.errors.nameRequired}</p>}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700">Email</label>
+              <label className="block text-sm font-medium text-slate-700">{t.email}</label>
               <input
                 type="email"
                 {...register('email')}
                 className="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
               />
-              {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email.message}</p>}
+              {errors.email && <p className="mt-1 text-xs text-red-600">{t.errors.emailInvalid}</p>}
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-slate-700">Phone</label>
+                <label className="block text-sm font-medium text-slate-700">{t.phone}</label>
                 <input
                   {...register('phone')}
                   className="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
                 />
-                {errors.phone && <p className="mt-1 text-xs text-red-600">{errors.phone.message}</p>}
+                {errors.phone && <p className="mt-1 text-xs text-red-600">{t.errors.phoneRequired}</p>}
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700">Country</label>
+                <label className="block text-sm font-medium text-slate-700">{t.country}</label>
                 <input
                   {...register('country')}
                   className="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
                 />
-                {errors.country && <p className="mt-1 text-xs text-red-600">{errors.country.message}</p>}
+                {errors.country && <p className="mt-1 text-xs text-red-600">{t.errors.countryRequired}</p>}
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700">Password</label>
+              <label className="block text-sm font-medium text-slate-700">{t.password}</label>
               <input
                 type="password"
                 {...register('password')}
                 className="mt-1 appearance-none block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
               />
-              {errors.password && <p className="mt-1 text-xs text-red-600">{errors.password.message}</p>}
+              {errors.password && <p className="mt-1 text-xs text-red-600">{t.errors.passwordLength}</p>}
             </div>
 
             <div>
@@ -164,14 +250,14 @@ export default function RegisterPage() {
                 disabled={loading}
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
               >
-                {loading ? 'Creating Account...' : 'Register'}
+                {loading ? t.creating : t.register}
               </button>
             </div>
           </form>
 
           <div className="mt-6 text-center">
              <Link href="/dubai" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
-               Already have an account? Sign in
+               {t.alreadyAccount}
              </Link>
           </div>
         </div>

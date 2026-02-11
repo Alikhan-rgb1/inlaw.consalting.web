@@ -15,13 +15,20 @@ export default function Header() {
   const [langMenuOpen, setLangMenuOpen] = useState(false);
   const pathname = usePathname();
 
+  const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
+    setMounted(true);
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  if (!mounted) {
+    return null; // or a loading skeleton
+  }
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (pathname === '/' && href.startsWith('/#')) {

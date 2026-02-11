@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Providers } from "@/components/Providers";
 import LogoutButton from "@/components/LogoutButton";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import "../(website)/globals.css";
 
 export default async function ProtectedLayout({ children }: { children: ReactNode }) {
@@ -62,6 +63,7 @@ export default async function ProtectedLayout({ children }: { children: ReactNod
                         
                         {/* User Profile */}
                         <div className="flex items-center gap-6">
+                            <LanguageSwitcher />
                             <div className="text-right hidden sm:block">
                                 <p className="text-sm font-semibold text-slate-900">{session.user?.name}</p>
                                 <div className="flex items-center justify-end gap-1.5">
