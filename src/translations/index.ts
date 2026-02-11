@@ -161,6 +161,8 @@ export const translations = {
       team: {
         title: 'Team and Expertise',
         subtitle: 'INLAW is a team of legal and business consultants specializing in international structures, AIFC, and UAE.',
+        kazakhstan: 'Kazakhstan Headquarters',
+        international: 'International Representatives',
         members: {
           berik: {
             name: 'Berik Rakhymzhanov',
@@ -201,6 +203,16 @@ export const translations = {
             name: 'Azamat Duisenbai',
             role: 'Official Representative in Almaty',
             description: 'Official Representative of INLAW in Almaty. Expert in obtaining permits and authorizations, as well as in the registration of intellectual property objects.'
+          },
+          batyrlan: {
+            name: 'Batyrlan Kubenov',
+            role: 'Head of Branch in Bishkek',
+            description: 'Head of INLAW Branch in Bishkek, with over 4 years of management experience and practice in Kyrgyzstan. Represents the interests of Kazakhstani business in the Kyrgyz Republic, ensures support for company activities and interaction with government bodies.'
+          },
+          serik: {
+            name: 'Serik Kadirbayev',
+            role: 'International Business Consultant',
+            description: 'International business consultant with over 20 years of experience in China, expert in logistics, foreign economic activity, and banking transactions. Official representative in Shanghai and one of the largest suppliers of Chinese automotive products.'
           }
         }
       },
@@ -799,6 +811,8 @@ export const translations = {
     team: {
       title: 'Команда и Экспертиза',
       subtitle: 'INLAW — это команда юридических и бизнес-консультантов, специализирующихся на международных структурах, МФЦА и ОАЭ.',
+      kazakhstan: 'Офисы в Казахстане',
+      international: 'Международные представители',
       members: {
         berik: {
           name: 'Берик Рахимжанов',
@@ -839,6 +853,16 @@ export const translations = {
             name: 'Азамат Дуйсенбай',
             role: 'Официальный представитель в Алматы',
           description: 'Официальный представитель INLAW в Алматы. Эксперт по получению разрешительных документов, а также регистрации объектов интеллектуальной собственности.'
+        },
+        batyrlan: {
+          name: 'Батырлан Кубенов',
+          role: 'Руководитель филиала в Бишкеке',
+          description: 'Руководитель филиала INLAW в Бишкеке, с управленческим опытом и практикой работы в Кыргызстане более 4 лет. Представляет интересы казахстанского бизнеса в Кыргызской Республике, обеспечивает сопровождение деятельности компаний и взаимодействие с государственными органами.'
+        },
+        serik: {
+          name: 'Серик Кадирбаев',
+          role: 'Международный бизнес-консультант',
+          description: 'Международный бизнес-консультант с более чем 20-летним опытом работы в Китае, эксперт в области логистики, внешнеэкономической деятельности и банковских транзакций. Является официальным представителем в Шанхае и одним из крупнейших поставщиков продукции китайского автопрома.'
         }
       }
     },
@@ -1437,6 +1461,8 @@ export const translations = {
     team: {
       title: '团队与专业知识',
       subtitle: 'INLAW 是一支专注于国际结构、AIFC 和阿联酋的法律和商业顾问团队。',
+      kazakhstan: '哈萨克斯坦总部',
+      international: '国际代表',
       members: {
         berik: {
           name: 'Berik Rakhymzhanov',
@@ -1477,6 +1503,16 @@ export const translations = {
             name: 'Azamat Duisenbai',
             role: '阿拉木图官方代表',
           description: 'INLAW 阿拉木图官方代表。擅长获取许可和授权，以及知识产权对象的注册。'
+        },
+        batyrlan: {
+          name: 'Batyrlan Kubenov',
+          role: '比什凯克分公司负责人',
+          description: 'INLAW 比什凯克分公司负责人，在吉尔吉斯斯坦拥有超过4年的管理经验和实践。代表哈萨克斯坦企业在吉尔吉斯共和国的利益，确公司活动的伴随支持以及与政府机构的互动。'
+        },
+        serik: {
+          name: 'Serik Kadirbayev',
+          role: '国际商业顾问',
+          description: '拥有超过20年中国工作经验的国际商业顾问，物流、对外经济活动和银行交易领域的专家。上海官方代表，也是中国汽车产品最大的供应商之一。'
         }
       }
     },
