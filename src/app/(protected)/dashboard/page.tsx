@@ -26,6 +26,13 @@ export default function DashboardPage() {
   const [submitting, setSubmitting] = useState(false);
   const [deleting, setDeleting] = useState<string | null>(null);
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+  interface Document {
+    id: string;
+    file_name: string;
+    doc_type: string;
+    created_at: string;
+  }
+
   const [documents, setDocuments] = useState<Document[]>([]);
   const [applications, setApplications] = useState<any[]>([]);
   const [formData, setFormData] = useState<any>({});
