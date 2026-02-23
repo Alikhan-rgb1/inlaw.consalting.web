@@ -8,6 +8,7 @@ import { Providers } from "@/components/Providers";
 import LogoutButton from "@/components/LogoutButton";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import "../(website)/globals.css";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export default async function ProtectedLayout({ children }: { children: ReactNode }) {
   const session = await getServerSession(authOptions);
@@ -83,6 +84,7 @@ export default async function ProtectedLayout({ children }: { children: ReactNod
                 {children}
             </main>
         </Providers>
+        <SpeedInsights />
       </body>
     </html>
   );
