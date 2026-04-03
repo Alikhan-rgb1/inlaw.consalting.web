@@ -31,7 +31,7 @@ const locationConfig: LocationConfig[] = [
     top: '35.38%',
     left: '47.14%',
     address: '303 Baizakov St',
-    phones: ['+77780008872 '],
+    phones: ['+77773849913 '],
     cardPosition: 'bottom',
     labelPosition: 'right'
   },
