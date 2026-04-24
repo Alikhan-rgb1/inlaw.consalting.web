@@ -3,16 +3,22 @@
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 export default function Footer() {
   const { t } = useLanguage();
   const [mounted, setMounted] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
   if (!mounted) {
+    return null;
+  }
+
+  if (pathname === '/') {
     return null;
   }
   

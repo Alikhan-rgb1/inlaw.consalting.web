@@ -2,7 +2,12 @@ export type Language = 'EN' | 'RU' | 'CHI';
 
 export const translations = {
   EN: {
+    common: {
+      clientPortal: 'Client Portal',
+    },
     header: {
+      brandSubtitle: 'Company Service Provider',
+      brandName: 'INLAW inc LTD.',
       services: 'Services',
       solutions: 'Solutions',
       about: 'About',
@@ -12,8 +17,10 @@ export const translations = {
     },
     hero: {
       title: 'Registration and Support of International Business',
+      titleLines: ['Registration & Support', 'of International', 'Business.'],
       subtitle: 'in Kazakhstan, UAE, Kyrgyzstan, and Shanghai',
       description: 'Company registration, support for opening bank accounts, and licensing. Provision of a full range of legal and corporate services for business management in these jurisdictions.',
+      badge: 'AIFC Licensed · Est. 2020',
       aifc: 'AIFC (Astana International Financial Centre)',
       dubai: 'Dubai Free Zones & Mainland',
       bishkek: 'Bishkek & Central Asia',
@@ -23,6 +30,7 @@ export const translations = {
       disclaimer: 'Free initial structure analysis • Response within 24 hours',
     },
     geography: {
+      badge: 'Where we operate',
       title: 'Four Jurisdictions — One Team',
       subtitle: 'We support projects in key locations for international business and financial structures.',
       servicesLabel: 'Services',
@@ -56,7 +64,25 @@ export const translations = {
         taxOptimization: 'Tax optimization',
       },
     },
+    jurisdictions: {
+      cards: {
+        astana: { subtitle: 'Kazakhstan — Headquarters', code: 'KZ · AIFC' },
+        dubai: { subtitle: 'United Arab Emirates', code: 'AE · IFZA' },
+        bishkek: { subtitle: 'Kyrgyzstan', code: 'KG · CA HUB' },
+        shanghai: { subtitle: 'China — Trade & Sourcing', code: 'CN · SHANGHAI' },
+        almaty: { subtitle: 'Kazakhstan — Representative Office', code: 'KZ · REP' },
+      },
+      nextMarket: {
+        title: 'Your Next Market?',
+        subtitle: 'Cross-border holding structures',
+        cta: "Let's talk →",
+        tag1: 'Holdings',
+        tag2: 'Substance',
+        description: 'We structure cross-border holdings across Eurasia.',
+      },
+    },
     servicesSection: {
+      badge: 'What we do',
       title: 'Our Key Services',
       subtitle: 'Full range of legal and corporate solutions for your business',
       allServices: 'All Services',
@@ -80,30 +106,42 @@ export const translations = {
       },
     },
     solutionsSection: {
+      badge: 'Packaged solutions',
       title: 'Ready-made Solutions for International Business',
+      titleLines: ['Ready-made Solutions', 'for International Business'],
       subtitle: 'Comprehensive service packages for quick start and scaling',
       learnMore: 'Learn more about the solution',
+      learnMoreShort: 'Learn more',
       items: {
         aifc: {
           title: 'AIFC Company + Bank Account',
           description: 'Launch a company in AIFC and open a bank account on a turnkey basis.',
+          tag: '▲ AIFC · Kazakhstan',
+          meta: '6–8 weeks · From $4,500',
         },
         dubai: {
           title: 'Dubai Free Zone + Residency',
           description: 'Company registration in UAE + residence visa + bank account.',
+          tag: '▲ Free Zone · UAE',
+          meta: '8–10 weeks · From $6,900',
         },
         holding: {
           title: 'Holding Structure KZ – UAE',
           description: 'Building a holding structure between Kazakhstan and UAE.',
+          tag: '▲ Cross-border',
+          meta: 'Custom scope · On request',
         },
         fintech: {
           title: 'Fintech Launch',
           description: 'Registration, license, and banking infrastructure for fintech projects.',
+          tag: '▲ Regulated · Fintech',
+          meta: '6–9 months · On request',
         },
       },
     },
     whyUs: {
-        title: 'Why Clients Choose',
+        badge: 'Why INLAW',
+        title: 'Why Clients Choose Us',
         subtitle: "We don't just register companies — we create a working infrastructure for your business in key financial centers of Eurasia.",
         items: {
           expertise: {
@@ -133,12 +171,15 @@ export const translations = {
         }
       },
       certifications: {
+        badge: 'Credentials',
         title: 'Accreditations & Certifications',
         subtitle: 'Our expertise is confirmed by official certifications and regulatory accreditations',
       },
       process: {
+        badge: 'How we work',
         title: 'How We Support Your Project',
         subtitle: 'Clear and transparent work process at every stage',
+        stepLabels: ['Step 1 · Week 1', 'Step 2 · Week 2', 'Step 3 · Weeks 3–8', 'Step 4 · Ongoing'],
         items: {
           analysis: {
             title: 'Analysis and Strategy',
@@ -159,6 +200,7 @@ export const translations = {
         }
       },
       team: {
+        badge: 'The people',
         title: 'Team and Expertise',
         subtitle: 'INLAW is a team of legal and business consultants specializing in international structures, AIFC, and UAE.',
         kazakhstan: 'Kazakhstan Headquarters',
@@ -197,6 +239,7 @@ export const translations = {
           asel: {
             name: 'Asel Kozhakhmetova',
             role: 'Business Consultant',
+            overlay: 'China · Dubai',
             description: 'Business consultant with 15 years of professional experience: 12 years in China and 3 years in Dubai. Fluent in Chinese, English, Russian, and Kazakh.'
           },
           azamat: {
@@ -207,11 +250,13 @@ export const translations = {
           batyrlan: {
             name: 'Batyrlan Kubenov',
             role: 'Head of Branch in Bishkek',
+            overlay: 'Head · Bishkek',
             description: 'Head of INLAW Branch in Bishkek, with over 4 years of management experience and practice in Kyrgyzstan. Represents the interests of Kazakhstani business in the Kyrgyz Republic, ensures support for company activities and interaction with government bodies.'
           },
           serik: {
             name: 'Serik Kadirbayev',
             role: 'International Business Consultant',
+            overlay: 'Shanghai',
             description: 'International business consultant with over 20 years of experience in China, expert in logistics, foreign economic activity, and banking transactions. Official representative in Shanghai and one of the largest suppliers of Chinese automotive products.'
           }
         }
@@ -219,6 +264,12 @@ export const translations = {
       stats: {
         title: 'Our Experience in Numbers',
         subtitle: 'Real results of our work and client trust',
+        strip: {
+          companiesRegistered: 'Companies Registered',
+          licensesObtained: 'Licenses Obtained',
+          jurisdictionsOffices: 'Jurisdictions · 5 Offices',
+          yearsOfPractice: 'Years of Practice',
+        },
         items: {
           companies: {
             label: 'Companies',
@@ -239,8 +290,20 @@ export const translations = {
         }
       },
       contact: {
+        badge: "Let's talk",
         title: "Let's discuss your project",
+        titleLines: ["Let's discuss", 'your project'],
         subtitle: 'Leave a request — we will propose the optimal structure, jurisdiction, and estimated budget for your business.',
+        info: {
+          responseTimeLabel: 'Response time',
+          responseTimeValue: 'within 24 hours',
+          languagesLabel: 'Languages',
+          languagesValue: 'EN · RU · KZ · 中文',
+          hqLabel: 'HQ · Astana',
+          dubaiOfficeLabel: 'Dubai office',
+          initialConsultationLabel: 'Initial consultation',
+          initialConsultationValue: 'Free',
+        },
         form: {
           name: 'Name',
           namePlaceholder: 'Your name',
@@ -253,11 +316,14 @@ export const translations = {
           message: 'Briefly about the project',
           messagePlaceholder: 'Describe your task or question...',
           submit: 'Get a Consultation',
+          sending: 'Sending…',
+          sent: "Sent! We'll respond within 24 hours",
           success: 'Thank you for your request! We will contact you shortly.'
         }
       },
       footer: {
         rights: 'All rights reserved.',
+        copy: '© 2024 Inlaw.web. All rights reserved.',
         locations: [
           { city: 'Astana', address: '1 Heydar Aliyev St', phone: '+7 700 146 66 46' },
           { city: 'Almaty', address: '303 Baizakov St', phone: '+7 778 000 88 72' },
@@ -652,7 +718,12 @@ export const translations = {
       }
     },
     RU: {
+      common: {
+        clientPortal: 'Клиентский портал',
+      },
       header: {
+        brandSubtitle: 'Провайдер корпоративных услуг',
+        brandName: 'INLAW inc LTD.',
         services: 'Услуги',
       solutions: 'Решения',
       about: 'О нас',
@@ -662,8 +733,10 @@ export const translations = {
     },
     hero: {
       title: 'Регистрация и Сопровождение Международного Бизнеса',
+      titleLines: ['Регистрация и сопровождение', 'международного', 'бизнеса.'],
       subtitle: 'в Казахстане, ОАЭ, Кыргызстане и Шанхае',
       description: 'Регистрация компаний, сопровождение открытия банковских счетов и оформление лицензий. Предоставление полного спектра юридических и корпоративных услуг по управлению бизнесом в данных юрисдикциях.',
+      badge: 'Лицензия МФЦА · Осн. 2020',
       aifc: 'МФЦА (Международный Финансовый Центр Астана)',
       dubai: 'Свободные зоны и Мейнленд Дубая',
       bishkek: 'Бишкек и Центральная Азия',
@@ -673,6 +746,7 @@ export const translations = {
       disclaimer: 'Бесплатный первичный анализ структуры • Ответ в течение 24 часов',
     },
     geography: {
+      badge: 'Где мы работаем',
       title: 'Четыре Юрисдикции — Одна Команда',
       subtitle: 'Мы поддерживаем проекты в ключевых локациях для международного бизнеса и финансовых структур.',
       servicesLabel: 'Услуги',
@@ -706,7 +780,25 @@ export const translations = {
         taxOptimization: 'Налоговая оптимизация',
       },
     },
+    jurisdictions: {
+      cards: {
+        astana: { subtitle: 'Казахстан — головной офис', code: 'KZ · AIFC' },
+        dubai: { subtitle: 'ОАЭ', code: 'AE · IFZA' },
+        bishkek: { subtitle: 'Кыргызстан', code: 'KG · CA HUB' },
+        shanghai: { subtitle: 'Китай — торговля и сорсинг', code: 'CN · SHANGHAI' },
+        almaty: { subtitle: 'Казахстан — представительство', code: 'KZ · REP' },
+      },
+      nextMarket: {
+        title: 'Ваш следующий рынок?',
+        subtitle: 'Кросс-бордер холдинговые структуры',
+        cta: 'Давайте обсудим →',
+        tag1: 'Холдинги',
+        tag2: 'Сабстанс',
+        description: 'Мы структурируем кросс-бордер холдинги по Евразии.',
+      },
+    },
     servicesSection: {
+      badge: 'Что мы делаем',
       title: 'Наши Ключевые Услуги',
       subtitle: 'Полный спектр юридических и корпоративных решений для вашего бизнеса',
       allServices: 'Все услуги',
@@ -730,30 +822,42 @@ export const translations = {
       },
     },
     solutionsSection: {
+      badge: 'Готовые решения',
       title: 'Готовые Решения для Международного Бизнеса',
+      titleLines: ['Готовые решения', 'для международного бизнеса'],
       subtitle: 'Комплексные пакеты услуг для быстрого старта и масштабирования',
       learnMore: 'Узнать больше о решении',
+      learnMoreShort: 'Подробнее',
       items: {
         aifc: {
           title: 'Компания МФЦА + Банковский Счет',
           description: 'Запуск компании в МФЦА и открытие банковского счета под ключ.',
+          tag: '▲ МФЦА · Казахстан',
+          meta: '6–8 недель · от $4,500',
         },
         dubai: {
           title: 'Свободная Зона Дубай + Резидентство',
           description: 'Регистрация компании в ОАЭ + резидентская виза + банковский счет.',
+          tag: '▲ Free Zone · ОАЭ',
+          meta: '8–10 недель · от $6,900',
         },
         holding: {
           title: 'Холдинговая Структура КЗ – ОАЭ',
           description: 'Построение холдинговой структуры между Казахстаном и ОАЭ.',
+          tag: '▲ Cross-border',
+          meta: 'Индивидуально · по запросу',
         },
         fintech: {
           title: 'Запуск Финтех Проекта',
           description: 'Регистрация, лицензия и банковская инфраструктура для финтех проектов.',
+          tag: '▲ Регулируемое · Fintech',
+          meta: '6–9 месяцев · по запросу',
         },
       },
     },
     whyUs: {
-        title: 'Почему клиенты выбирают',
+        badge: 'Почему INLAW',
+        title: 'Почему клиенты выбирают нас',
         subtitle: "Мы не просто регистрируем компании — мы создаем работающую инфраструктуру для вашего бизнеса в ключевых финансовых центрах Евразии.",
         items: {
           expertise: {
@@ -783,12 +887,15 @@ export const translations = {
         }
       },
       certifications: {
+        badge: 'Сертификаты',
         title: 'Аккредитации и Сертификаты',
         subtitle: 'Наша экспертиза подтверждена официальными сертификатами и регуляторными аккредитациями',
       },
       process: {
+      badge: 'Как мы работаем',
       title: 'Как Мы Поддерживаем Ваш Проект',
       subtitle: 'Четкий и прозрачный рабочий процесс на каждом этапе',
+      stepLabels: ['Шаг 1 · Неделя 1', 'Шаг 2 · Неделя 2', 'Шаг 3 · Недели 3–8', 'Шаг 4 · Постоянно'],
       items: {
         analysis: {
           title: 'Анализ и Стратегия',
@@ -809,6 +916,7 @@ export const translations = {
       }
     },
     team: {
+      badge: 'Команда',
       title: 'Команда и Экспертиза',
       subtitle: 'INLAW — это команда юридических и бизнес-консультантов, специализирующихся на международных структурах, МФЦА и ОАЭ.',
       kazakhstan: 'Офисы в Казахстане',
@@ -847,6 +955,7 @@ export const translations = {
         asel: {
           name: 'Асель Кожахметова',
           role: 'Бизнес-консультант',
+          overlay: 'Китай · Дубай',
           description: 'Бизнес-консультант с 15-летним профессиональным опытом: 12 лет работы в Китае и 3 года в Дубае. Свободно владеет китайским, английским, русским и казахским языками.'
         },
         azamat: {
@@ -857,11 +966,13 @@ export const translations = {
         batyrlan: {
           name: 'Батырлан Кубенов',
           role: 'Руководитель филиала в Бишкеке',
+          overlay: 'Руководитель · Бишкек',
           description: 'Руководитель филиала INLAW в Бишкеке, с управленческим опытом и практикой работы в Кыргызстане более 4 лет. Представляет интересы казахстанского бизнеса в Кыргызской Республике, обеспечивает сопровождение деятельности компаний и взаимодействие с государственными органами.'
         },
         serik: {
           name: 'Серик Кадирбаев',
           role: 'Международный бизнес-консультант',
+          overlay: 'Шанхай',
           description: 'Международный бизнес-консультант с более чем 20-летним опытом работы в Китае, эксперт в области логистики, внешнеэкономической деятельности и банковских транзакций. Является официальным представителем в Шанхае и одним из крупнейших поставщиков продукции китайского автопрома.'
         }
       }
@@ -869,6 +980,12 @@ export const translations = {
     stats: {
       title: 'Наш опыт в цифрах',
       subtitle: 'Реальные результаты нашей работы и доверие клиентов',
+      strip: {
+        companiesRegistered: 'Зарегистрировано компаний',
+        licensesObtained: 'Получено лицензий',
+        jurisdictionsOffices: 'Юрисдикции · 5 офисов',
+        yearsOfPractice: 'Лет практики',
+      },
       items: {
         companies: {
           label: 'Компаний',
@@ -889,8 +1006,20 @@ export const translations = {
       }
     },
     contact: {
+        badge: 'Давайте обсудим',
         title: 'Обсудим ваш проект',
+        titleLines: ['Давайте обсудим', 'ваш проект'],
         subtitle: 'Оставьте заявку — мы предложим оптимальную структуру, юрисдикцию и расчет бюджета для вашего бизнеса.',
+        info: {
+          responseTimeLabel: 'Срок ответа',
+          responseTimeValue: 'в течение 24 часов',
+          languagesLabel: 'Языки',
+          languagesValue: 'EN · RU · KZ · 中文',
+          hqLabel: 'Офис · Астана',
+          dubaiOfficeLabel: 'Офис в Дубае',
+          initialConsultationLabel: 'Первичная консультация',
+          initialConsultationValue: 'Бесплатно',
+        },
         form: {
           name: 'Имя',
           namePlaceholder: 'Ваше имя',
@@ -903,6 +1032,8 @@ export const translations = {
           message: 'Кратко о проекте',
           messagePlaceholder: 'Опишите вашу задачу или вопрос...',
           submit: 'Получить консультацию',
+          sending: 'Отправляем…',
+          sent: 'Отправлено! Ответим в течение 24 часов',
           success: 'Спасибо за заявку! Мы свяжемся с вами в ближайшее время.'
         }
       },
@@ -1287,6 +1418,7 @@ export const translations = {
       },
     footer: {
         rights: 'Все права защищены.',
+        copy: '© 2024 Inlaw.web. Все права защищены.',
         locations: [
            { city: 'Астана', address: 'ул. Гейдара Алиева 1', phone: '+7 700 146 66 46' },
            { city: 'Алматы', address: 'ул. Байзакова 303', phone: '+7 778 000 88 72' },
@@ -1302,7 +1434,12 @@ export const translations = {
       }
   },
   CHI: {
+    common: {
+      clientPortal: '客户门户',
+    },
     header: {
+      brandSubtitle: '公司服务提供商',
+      brandName: 'INLAW inc LTD.',
       services: '服务',
       solutions: '解决方案',
       about: '关于我们',
@@ -1312,8 +1449,10 @@ export const translations = {
     },
     hero: {
       title: '国际商业注册与支持',
+      titleLines: ['国际商业', '注册与支持', '服务。'],
       subtitle: '在哈萨克斯坦、阿联酋、吉尔吉斯斯坦和上海',
       description: '我们开设公司、银行账户和许可证。我们为这些司法管辖区的企业提供全面的法律和企业管理。',
+      badge: 'AIFC 许可 · 成立于 2020',
       aifc: 'AIFC（阿斯塔纳国际金融中心）',
       dubai: '迪拜自由贸易区和大陆',
       bishkek: '比什凯克和中亚',
@@ -1323,6 +1462,7 @@ export const translations = {
       disclaimer: '免费初步结构分析 • 24小时内回复',
     },
     geography: {
+      badge: '我们覆盖的地区',
       title: '四个司法管辖区 — 一个团队',
       subtitle: '我们支持国际商业和金融结构关键地点的项目。',
       servicesLabel: '服务',
@@ -1356,7 +1496,25 @@ export const translations = {
         taxOptimization: '税务优化',
       },
     },
+    jurisdictions: {
+      cards: {
+        astana: { subtitle: '哈萨克斯坦 — 总部', code: 'KZ · AIFC' },
+        dubai: { subtitle: '阿拉伯联合酋长国', code: 'AE · IFZA' },
+        bishkek: { subtitle: '吉尔吉斯斯坦', code: 'KG · CA HUB' },
+        shanghai: { subtitle: '中国 — 贸易与采购', code: 'CN · SHANGHAI' },
+        almaty: { subtitle: '哈萨克斯坦 — 代表处', code: 'KZ · REP' },
+      },
+      nextMarket: {
+        title: '您的下一个市场？',
+        subtitle: '跨境控股结构',
+        cta: '聊一聊 →',
+        tag1: '控股',
+        tag2: '实质',
+        description: '我们为欧亚地区搭建跨境控股结构。',
+      },
+    },
     servicesSection: {
+      badge: '我们做什么',
       title: '我们的关键服务',
       subtitle: '为您的业务提供全方位的法律和企业解决方案',
       allServices: '所有服务',
@@ -1380,30 +1538,42 @@ export const translations = {
       },
     },
     solutionsSection: {
+      badge: '现成方案',
       title: '国际商业现成解决方案',
+      titleLines: ['国际商业', '现成解决方案'],
       subtitle: '快速启动和扩展的综合服务包',
       learnMore: '了解更多解决方案',
+      learnMoreShort: '了解更多',
       items: {
         aifc: {
           title: 'AIFC公司 + 银行账户',
           description: '在AIFC启动公司并开设银行账户（交钥匙基础）。',
+          tag: '▲ AIFC · 哈萨克斯坦',
+          meta: '6–8 周 · 起价 $4,500',
         },
         dubai: {
           title: '迪拜自由贸易区 + 居留权',
           description: '在阿联酋注册公司 + 居留签证 + 银行账户。',
+          tag: '▲ Free Zone · 阿联酋',
+          meta: '8–10 周 · 起价 $6,900',
         },
         holding: {
           title: '哈萨克斯坦 – 阿联酋控股结构',
           description: '在哈萨克斯坦和阿联酋之间建立控股结构。',
+          tag: '▲ 跨境',
+          meta: '定制范围 · 需咨询',
         },
         fintech: {
           title: '金融科技启动',
           description: '金融科技项目的注册、许可证和银行基础设施。',
+          tag: '▲ 受监管 · Fintech',
+          meta: '6–9 个月 · 需咨询',
         },
       },
     },
     whyUs: {
-        title: '为什么客户选择',
+        badge: '为什么选择 INLAW',
+        title: '为什么客户选择我们',
         subtitle: "我们不仅注册公司，还为您在欧亚主要金融中心的业务创建有效的基础设施。",
         items: {
           expertise: {
@@ -1433,12 +1603,15 @@ export const translations = {
         }
       },
       certifications: {
+        badge: '资质',
         title: '认证与资质',
         subtitle: '我们的专业能力已获得官方认证和监管机构的认可',
       },
       process: {
+      badge: '我们的流程',
       title: '我们如何支持您的项目',
       subtitle: '每个阶段清晰透明的工作流程',
+      stepLabels: ['第 1 步 · 第 1 周', '第 2 步 · 第 2 周', '第 3 步 · 第 3–8 周', '第 4 步 · 持续支持'],
       items: {
         analysis: {
           title: '分析和策略',
@@ -1459,6 +1632,7 @@ export const translations = {
       }
     },
     team: {
+      badge: '团队',
       title: '团队与专业知识',
       subtitle: 'INLAW 是一支专注于国际结构、AIFC 和阿联酋的法律和商业顾问团队。',
       kazakhstan: '哈萨克斯坦总部',
@@ -1497,6 +1671,7 @@ export const translations = {
         asel: {
           name: 'Asel Kozhakhmetova',
           role: '商业顾问',
+          overlay: '中国 · 迪拜',
           description: '拥有15年专业经验的商业顾问：在中国工作12年，在迪拜工作3年。精通中文、英语、俄语和哈萨克语。'
         },
         azamat: {
@@ -1507,11 +1682,13 @@ export const translations = {
         batyrlan: {
           name: 'Batyrlan Kubenov',
           role: '比什凯克分公司负责人',
+          overlay: '负责人 · 比什凯克',
           description: 'INLAW 比什凯克分公司负责人，在吉尔吉斯斯坦拥有超过4年的管理经验和实践。代表哈萨克斯坦企业在吉尔吉斯共和国的利益，确公司活动的伴随支持以及与政府机构的互动。'
         },
         serik: {
           name: 'Serik Kadirbayev',
           role: '国际商业顾问',
+          overlay: '上海',
           description: '拥有超过20年中国工作经验的国际商业顾问，物流、对外经济活动和银行交易领域的专家。上海官方代表，也是中国汽车产品最大的供应商之一。'
         }
       }
@@ -1519,6 +1696,12 @@ export const translations = {
     stats: {
       title: '我们的数字经验',
       subtitle: '我们工作的真实成果和客户的信任',
+      strip: {
+        companiesRegistered: '已注册公司',
+        licensesObtained: '已获许可证',
+        jurisdictionsOffices: '司法辖区 · 5 个办公室',
+        yearsOfPractice: '从业年限',
+      },
       items: {
         companies: {
           label: '公司',
@@ -1539,8 +1722,20 @@ export const translations = {
       }
     },
     contact: {
+      badge: '联系我们',
       title: '让我们讨论您的项目',
+      titleLines: ['让我们讨论', '您的项目'],
       subtitle: '留下请求 — 我们将为您的业务提出最佳结构、司法管辖区和预算估算。',
+      info: {
+        responseTimeLabel: '回复时间',
+        responseTimeValue: '24 小时内',
+        languagesLabel: '语言',
+        languagesValue: 'EN · RU · KZ · 中文',
+        hqLabel: '总部 · 阿斯塔纳',
+        dubaiOfficeLabel: '迪拜办公室',
+        initialConsultationLabel: '初步咨询',
+        initialConsultationValue: '免费',
+      },
       form: {
         name: '姓名',
         namePlaceholder: '您的姓名',
@@ -1553,6 +1748,8 @@ export const translations = {
         message: '项目简介',
         messagePlaceholder: '描述您的任务或问题...',
         submit: '获取咨询',
+        sending: '正在发送…',
+        sent: '已发送！我们将在 24 小时内回复',
         success: '感谢您的请求！我们将尽快与您联系。'
       }
     },
@@ -1937,6 +2134,7 @@ export const translations = {
     },
     footer: {
         rights: '版权所有。',
+        copy: '© 2024 Inlaw.web. 版权所有。',
         locations: [
            { city: '阿斯塔纳', address: '1 Heydar Aliyev St', phone: '+7 700 146 66 46' },
            { city: '阿拉木图', address: '303 Baizakov St', phone: '+7 778 000 88 72' },

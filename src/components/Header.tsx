@@ -30,6 +30,10 @@ export default function Header() {
     return null; // or a loading skeleton
   }
 
+  if (pathname === '/') {
+    return null;
+  }
+
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (pathname === '/' && href.startsWith('/#')) {
       e.preventDefault();
