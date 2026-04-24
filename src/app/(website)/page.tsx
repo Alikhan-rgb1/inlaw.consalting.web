@@ -117,10 +117,10 @@ header.scrolled{
 .hero-badge-pill .live{width:7px;height:7px;border-radius:50%;background:#22c55e;animation:livepulse 2s infinite;}
 .hero-h1{
   font-size:clamp(48px,6vw,90px);font-weight:900;
-  color:#0f172a;line-height:1.0;letter-spacing:-.04em;
+  color:#0f172a;line-height:1.14;letter-spacing:-.04em;
   margin-bottom:28px;
 }
-.hero-h1 .line{display:block;overflow:hidden;}
+.hero-h1 .line{display:block;overflow:hidden;padding:.06em 0 .14em;}
 .hero-h1 .inner{
   display:block;transform:translateY(110%);opacity:0;
   animation:slideUp .9s cubic-bezier(.22,1,.36,1) both;
