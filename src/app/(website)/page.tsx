@@ -125,8 +125,6 @@ header.scrolled{
   display:block;transform:translateY(110%);opacity:0;
   animation:slideUp .9s cubic-bezier(.22,1,.36,1) both;
 }
-.hero-h1 .inner:nth-child(1){animation-delay:.5s;}
-.hero-h1 .line:nth-child(2) .inner{animation-delay:.65s;}
 .hero-h1 .inner .blue{color:#2E447A;}
 .hero-desc{
   font-size:19px;color:#475569;max-width:560px;line-height:1.7;margin-bottom:36px;
@@ -561,7 +559,8 @@ footer .foot-col a:hover{color:#1e2f57;}
   .wrap,.nav-inner{padding:0 20px;}
   section{padding:72px 0;}
   .nav-pill{display:none;}
-  .hero-h1{font-size:44px;}
+  .hero-h1{font-size:36px;line-height:1.1;letter-spacing:-.02em;}
+  .hero-h1 .line{clip-path:inset(0 -100% 0 0);margin-bottom:4px;}
   .hero-content{margin-left:0;}
   .sol-grid,.contact-wrap,.cert-grid,.why-grid,.numbers-grid,.proc-grid{grid-template-columns:1fr;}
   .team-grid{grid-template-columns:repeat(2,1fr);}
@@ -831,15 +830,13 @@ export default function Home() {
               </div>
             </div>
             <h1 className="hero-h1">
-              <span className="line">
-                <span className="inner">{t.hero.titleLines[0]}</span>
-              </span>
-              <span className="line">
-                <span className="inner">{t.hero.titleLines[1]}</span>
-              </span>
-              <span className="line">
-                <span className="inner">{t.hero.titleLines[2]}</span>
-              </span>
+              {t.hero.titleLines.map((line, i) => (
+                <span className="line" key={i}>
+                  <span className="inner" style={{ animationDelay: `${0.5 + i * 0.15}s` }}>
+                    {line}
+                  </span>
+                </span>
+              ))}
             </h1>
             <p className="hero-desc">
               {t.hero.description}
