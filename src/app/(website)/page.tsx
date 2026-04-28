@@ -98,8 +98,9 @@ header.scrolled{
 .hero-bg::after{
   content:'';position:absolute;inset:0;
   background:
-    linear-gradient(90deg, rgba(15,23,42,0.92) 0%, rgba(15,23,42,0.80) 46%, rgba(15,23,42,0.30) 100%),
-    linear-gradient(180deg, rgba(15,23,42,0.40) 0%, rgba(15,23,42,0.20) 60%, rgba(15,23,42,0.10) 100%);
+    linear-gradient(90deg, rgba(255,255,255,1.00) 0%, rgba(255,255,255,0.96) 46%, rgba(255,255,255,0.70) 78%, rgba(255,255,255,0.44) 100%),
+    linear-gradient(180deg, rgba(255,255,255,0.78) 0%, rgba(255,255,255,0.42) 60%, rgba(15,23,42,0.10) 100%),
+    linear-gradient(0deg, rgba(255,255,255,0.34), rgba(255,255,255,0.34));
 }
 .hero-wrap{position:relative;z-index:2;padding-top:120px;padding-bottom:80px;}
 .hero-content{max-width:680px;margin-left:-600px;text-align:left;}
@@ -116,7 +117,7 @@ header.scrolled{
 .hero-badge-pill .live{width:7px;height:7px;border-radius:50%;background:#22c55e;animation:livepulse 2s infinite;}
 .hero-h1{
   font-size:clamp(48px,6vw,90px);font-weight:900;
-  color:#fff;line-height:0.98;letter-spacing:-.04em;
+  color:#0f172a;line-height:0.98;letter-spacing:-.04em;
   margin-bottom:28px;
 }
 .hero-h1 .line{display:block;overflow:visible;clip-path:inset(0 -1.2em 0 0);}
@@ -126,14 +127,14 @@ header.scrolled{
 }
 .hero-h1 .inner.blue{color:#2E447A;}
 .hero-desc{
-  font-size:19px;color:rgba(255,255,255,0.7);max-width:560px;line-height:1.7;margin-bottom:36px;
+  font-size:19px;color:#475569;max-width:560px;line-height:1.7;margin-bottom:36px;
   opacity:0;animation:fadeUp .8s cubic-bezier(.22,1,.36,1) .9s both;
 }
 .hero-dots{
   display:flex;flex-wrap:wrap;gap:18px;margin-bottom:40px;
   opacity:0;animation:fadeUp .8s cubic-bezier(.22,1,.36,1) 1.05s both;
 }
-.hero-dots div{display:flex;align-items:center;gap:8px;font-size:14.5px;font-weight:500;color:rgba(255,255,255,0.8);}
+.hero-dots div{display:flex;align-items:center;gap:8px;font-size:14.5px;font-weight:500;color:#1e293b;}
 .hero-dot{width:8px;height:8px;border-radius:50%;background:#2E447A;flex-shrink:0;}
 .hero-ctas{
   display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px;
