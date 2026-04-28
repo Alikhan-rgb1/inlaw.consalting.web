@@ -16,8 +16,8 @@ export const translations = {
       contact: 'Contact Us',
     },
     hero: {
-      title: 'Registration and Support of International Business',
-      titleLines: ['Registration', '& Support', 'of International', 'Business.'],
+      title: 'Registration & Support of International Business.',
+      titleLines: ['Registration & Support', ' of International', ' Business.'],
       subtitle: 'in Kazakhstan, UAE, Kyrgyzstan, and Shanghai',
       description: 'Company registration, support for opening bank accounts, and licensing. Provision of a full range of legal and corporate services for business management in these jurisdictions.',
       badge: 'AIFC Licensed · Est. 2020',
@@ -732,8 +732,8 @@ export const translations = {
       contact: 'Связаться',
     },
     hero: {
-      title: 'Регистрация и Сопровождение Международного Бизнеса',
-      titleLines: ['Регистрация', 'и сопровождение', 'международного', 'бизнеса.'],
+      title: 'Регистрация и Сопровождение международного бизнеса.',
+      titleLines: ['Регистрация и Сопровождение', 'международного', 'бизнеса.'],
       subtitle: 'в Казахстане, ОАЭ, Кыргызстане и Шанхае',
       description: 'Регистрация компаний, сопровождение открытия банковских счетов и оформление лицензий. Предоставление полного спектра юридических и корпоративных услуг по управлению бизнесом в данных юрисдикциях.',
       badge: 'Лицензия МФЦА · Осн. 2020',

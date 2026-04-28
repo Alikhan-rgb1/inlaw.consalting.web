@@ -98,9 +98,8 @@ header.scrolled{
 .hero-bg::after{
   content:'';position:absolute;inset:0;
   background:
-    linear-gradient(90deg, rgba(255,255,255,1.00) 0%, rgba(255,255,255,0.96) 46%, rgba(255,255,255,0.70) 78%, rgba(255,255,255,0.44) 100%),
-    linear-gradient(180deg, rgba(255,255,255,0.78) 0%, rgba(255,255,255,0.42) 60%, rgba(15,23,42,0.10) 100%),
-    linear-gradient(0deg, rgba(255,255,255,0.34), rgba(255,255,255,0.34));
+    linear-gradient(90deg, rgba(15,23,42,0.92) 0%, rgba(15,23,42,0.80) 46%, rgba(15,23,42,0.30) 100%),
+    linear-gradient(180deg, rgba(15,23,42,0.40) 0%, rgba(15,23,42,0.20) 60%, rgba(15,23,42,0.10) 100%);
 }
 .hero-wrap{position:relative;z-index:2;padding-top:120px;padding-bottom:80px;}
 .hero-content{max-width:680px;margin-left:-600px;text-align:left;}
@@ -117,7 +116,7 @@ header.scrolled{
 .hero-badge-pill .live{width:7px;height:7px;border-radius:50%;background:#22c55e;animation:livepulse 2s infinite;}
 .hero-h1{
   font-size:clamp(48px,6vw,90px);font-weight:900;
-  color:#0f172a;line-height:0.98;letter-spacing:-.04em;
+  color:#fff;line-height:0.98;letter-spacing:-.04em;
   margin-bottom:28px;
 }
 .hero-h1 .line{display:block;overflow:visible;clip-path:inset(0 -1.2em 0 0);}
@@ -125,16 +124,16 @@ header.scrolled{
   display:block;transform:translateY(110%);opacity:0;
   animation:slideUp .9s cubic-bezier(.22,1,.36,1) both;
 }
-.hero-h1 .inner .blue{color:#2E447A;}
+.hero-h1 .inner.blue{color:#2E447A;}
 .hero-desc{
-  font-size:19px;color:#475569;max-width:560px;line-height:1.7;margin-bottom:36px;
+  font-size:19px;color:rgba(255,255,255,0.7);max-width:560px;line-height:1.7;margin-bottom:36px;
   opacity:0;animation:fadeUp .8s cubic-bezier(.22,1,.36,1) .9s both;
 }
 .hero-dots{
   display:flex;flex-wrap:wrap;gap:18px;margin-bottom:40px;
   opacity:0;animation:fadeUp .8s cubic-bezier(.22,1,.36,1) 1.05s both;
 }
-.hero-dots div{display:flex;align-items:center;gap:8px;font-size:14.5px;font-weight:500;color:#1e293b;}
+.hero-dots div{display:flex;align-items:center;gap:8px;font-size:14.5px;font-weight:500;color:rgba(255,255,255,0.8);}
 .hero-dot{width:8px;height:8px;border-radius:50%;background:#2E447A;flex-shrink:0;}
 .hero-ctas{
   display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px;
@@ -163,6 +162,20 @@ header.scrolled{
 }
 .btn-hero-secondary:hover{background:#f0f5ff;border-color:#2E447A;transform:translateY(-2px);}
 .hero-note{font-size:12.5px;color:#94a3b8;font-weight:500;opacity:0;animation:fadeUp .8s cubic-bezier(.22,1,.36,1) 1.3s both;}
+
+/* ═══ HERO GLOBE ═══ */
+.hero-globe-wrap{
+  position:absolute;right:0;top:0;bottom:0;
+  width:52%;display:flex;align-items:center;justify-content:center;
+  pointer-events:none;z-index:1;
+  opacity:0;animation:fadeUp .9s cubic-bezier(.22,1,.36,1) 1.1s both;
+}
+.globe-canvas-wrap{
+  position:relative;width:580px;height:580px;
+  flex-shrink:0;
+}
+@media(max-width:1100px){.hero-globe-wrap{width:44%;} .globe-canvas-wrap{width:440px;height:440px;}}
+@media(max-width:768px){.hero-globe-wrap{display:none;}}
 
 /* ═══ NUMBERS ═══ */
 .numbers{
@@ -589,6 +602,297 @@ export default function Home() {
     const procFill = document.getElementById('procFill') as HTMLElement | null;
     const procWrap = document.querySelector('.proc-wrap');
 
+    // --- GLOBE LOGIC ---
+    const globeCanvas = document.getElementById('globeCanvas') as HTMLCanvasElement | null;
+    let globeRafId = 0;
+    const globeResize = () => {
+      if (!globeCanvas) return;
+      const wrap = globeCanvas.parentElement!;
+      const s = wrap.offsetWidth;
+      globeCanvas.width = s;
+      globeCanvas.height = s;
+    };
+
+    if (globeCanvas) {
+      const wrap = globeCanvas.parentElement!;
+      globeResize();
+      window.addEventListener('resize', globeResize);
+
+      const ctx = globeCanvas.getContext('2d')!;
+      const TAU = Math.PI * 2;
+      let t = 0;
+
+      const locs: [number, number, string, string][] = [
+        [51.2, 71.4, 'Astana', '#2E447A'],
+        [25.2, 55.3, 'Dubai', '#f59e0b'],
+        [42.9, 74.6, 'Bishkek', '#10b981'],
+        [31.2, 121.5, 'Shanghai', '#ef4444'],
+      ];
+
+      const pts = locs.map(([la, lo, lbl, col]) => ({
+        lat: (la * Math.PI) / 180,
+        lon: (lo * Math.PI) / 180,
+        label: lbl,
+        col,
+        pulse: Math.random() * TAU,
+      }));
+
+      const latLines = [-60, -30, 0, 30, 60].map((d) => (d * Math.PI) / 180);
+      const lonLines = Array.from({ length: 12 }, (_, i) => (i * TAU) / 12);
+      const ROT_SPEED = 0.004;
+
+      const project = (lat: number, lon: number, rotY: number, R: number, cx: number, cy: number) => {
+        const x0 = Math.cos(lat) * Math.sin(lon);
+        const y0 = Math.sin(lat);
+        const z0 = Math.cos(lat) * Math.cos(lon);
+        const cosR = Math.cos(rotY),
+          sinR = Math.sin(rotY);
+        const x1 = x0 * cosR + z0 * sinR;
+        const z1 = -x0 * sinR + z0 * cosR;
+        const px = cx + x1 * R;
+        const py = cy - y0 * R;
+        return { px, py, z: z1, visible: z1 > -0.1 };
+      };
+
+      const roundRect = (
+        ctx: CanvasRenderingContext2D,
+        x: number,
+        y: number,
+        w: number,
+        h: number,
+        r: number
+      ) => {
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.lineTo(x + w - r, y);
+        ctx.arcTo(x + w, y, x + w, y + r, r);
+        ctx.lineTo(x + w, y + h - r);
+        ctx.arcTo(x + w, y + h, x + w - r, y + h, r);
+        ctx.lineTo(x + r, y + h);
+        ctx.arcTo(x, y + h, x, y + h - r, r);
+        ctx.lineTo(x, y + r);
+        ctx.arcTo(x, y, x + r, y, r);
+        ctx.closePath();
+      };
+
+      const drawGlobe = () => {
+        const s = globeCanvas.width;
+        const cx = s / 2,
+          cy = s / 2;
+        const R = s * 0.38;
+        ctx.clearRect(0, 0, s, s);
+        const rotY = t * ROT_SPEED;
+
+        // Glow behind globe
+        const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 1.1);
+        grad.addColorStop(0, 'rgba(46,68,122,0.13)');
+        grad.addColorStop(0.6, 'rgba(46,68,122,0.06)');
+        grad.addColorStop(1, 'rgba(46,68,122,0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(cx, cy, R * 1.3, 0, TAU);
+        ctx.fill();
+
+        // Globe base
+        const globeGrad = ctx.createRadialGradient(cx - R * 0.3, cy - R * 0.3, R * 0.05, cx, cy, R);
+        globeGrad.addColorStop(0, 'rgba(240,247,255,0.18)');
+        globeGrad.addColorStop(0.5, 'rgba(218,234,255,0.10)');
+        globeGrad.addColorStop(1, 'rgba(46,68,122,0.08)');
+        ctx.fillStyle = globeGrad;
+        ctx.beginPath();
+        ctx.arc(cx, cy, R, 0, TAU);
+        ctx.fill();
+
+        // Grid lines (back)
+        ctx.save();
+        latLines.forEach((lat) => {
+          ctx.beginPath();
+          let first = true;
+          for (let i = 0; i <= 120; i++) {
+            const lon = (i / 120) * TAU;
+            const { px, py, z } = project(lat, lon, rotY, R, cx, cy);
+            if (z < 0) {
+              if (first) {
+                ctx.moveTo(px, py);
+                first = false;
+              } else ctx.lineTo(px, py);
+            } else {
+              first = true;
+            }
+          }
+          ctx.strokeStyle = 'rgba(46,68,122,0.12)';
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        });
+        lonLines.forEach((lon0) => {
+          ctx.beginPath();
+          let first = true;
+          for (let i = 0; i <= 80; i++) {
+            const lat = (i / 80) * Math.PI - Math.PI / 2;
+            const { px, py, z } = project(lat, lon0, rotY, R, cx, cy);
+            if (z < 0) {
+              if (first) {
+                ctx.moveTo(px, py);
+                first = false;
+              } else ctx.lineTo(px, py);
+            } else {
+              first = true;
+            }
+          }
+          ctx.strokeStyle = 'rgba(46,68,122,0.12)';
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        });
+        ctx.restore();
+
+        // Outer glow ring
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(cx, cy, R, 0, TAU);
+        ctx.strokeStyle = 'rgba(46,68,122,0.2)';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(cx, cy, R * 1.06, 0, TAU);
+        ctx.strokeStyle = 'rgba(46,68,122,0.07)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.restore();
+
+        // Orbit rings
+        const orbits = [
+          { rScale: 1.18, speed: 0.8, tilt: 0.35, col: 'rgba(46,68,122,0.22)', dash: [6, 5] },
+          { rScale: 1.3, speed: -0.55, tilt: -0.25, col: 'rgba(245,158,11,0.2)', dash: [4, 8] },
+          { rScale: 1.42, speed: 0.4, tilt: 0.6, col: 'rgba(16,185,129,0.15)', dash: [10, 6] },
+        ];
+        orbits.forEach(({ rScale, speed, tilt, col, dash }) => {
+          const or = R * rScale;
+          ctx.save();
+          ctx.translate(cx, cy);
+          ctx.scale(1, Math.abs(Math.sin(tilt + t * 0.001)) * 0.45 + 0.28);
+          ctx.rotate(tilt + t * 0.002);
+          ctx.beginPath();
+          ctx.arc(0, 0, or, 0, TAU);
+          ctx.strokeStyle = col;
+          ctx.lineWidth = 1;
+          ctx.setLineDash(dash);
+          ctx.stroke();
+          const angle = t * speed * 0.012;
+          const dx = Math.cos(angle) * or,
+            dy = Math.sin(angle) * or;
+          ctx.beginPath();
+          ctx.arc(dx, dy, 5, 0, TAU);
+          ctx.fillStyle = col.replace('0.', '.7').replace('rgba', 'rgb').replace(/,[^,]+\)$/, ')');
+          ctx.fill();
+          const dg = ctx.createRadialGradient(dx, dy, 0, dx, dy, 12);
+          dg.addColorStop(0, col.replace(/[\d.]+\)$/, '0.5)'));
+          dg.addColorStop(1, 'transparent');
+          ctx.fillStyle = dg;
+          ctx.beginPath();
+          ctx.arc(dx, dy, 12, 0, TAU);
+          ctx.fill();
+          ctx.restore();
+        });
+
+        // Grid lines (front)
+        latLines.forEach((lat) => {
+          ctx.beginPath();
+          let first = true;
+          for (let i = 0; i <= 120; i++) {
+            const lon = (i / 120) * TAU;
+            const { px, py, z } = project(lat, lon, rotY, R, cx, cy);
+            if (z >= 0) {
+              if (first) {
+                ctx.moveTo(px, py);
+                first = false;
+              } else ctx.lineTo(px, py);
+            } else {
+              first = true;
+            }
+          }
+          ctx.strokeStyle = 'rgba(46,68,122,0.22)';
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        });
+        lonLines.forEach((lon0) => {
+          ctx.beginPath();
+          let first = true;
+          for (let i = 0; i <= 80; i++) {
+            const lat = (i / 80) * Math.PI - Math.PI / 2;
+            const { px, py, z } = project(lat, lon0, rotY, R, cx, cy);
+            if (z >= 0) {
+              if (first) {
+                ctx.moveTo(px, py);
+                first = false;
+              } else ctx.lineTo(px, py);
+            } else {
+              first = true;
+            }
+          }
+          ctx.strokeStyle = 'rgba(46,68,122,0.22)';
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        });
+
+        // Location dots
+        pts.forEach(({ lat, lon, label, col, pulse }) => {
+          const { px, py, z, visible } = project(lat, lon, rotY, R, cx, cy);
+          if (!visible) return;
+          const pp = (0.8 + z * 0.2) * 0.9;
+          const pSize = (Math.sin(t * 0.06 + pulse) + 1) * 0.5;
+          const pr = 8 + pSize * 14;
+          const pg = ctx.createRadialGradient(px, py, 0, px, py, pr);
+          pg.addColorStop(0, col + '88');
+          pg.addColorStop(1, col + '00');
+          ctx.fillStyle = pg;
+          ctx.beginPath();
+          ctx.arc(px, py, pr, 0, TAU);
+          ctx.fill();
+          ctx.beginPath();
+          ctx.arc(px, py, 6 * pp, 0, TAU);
+          ctx.fillStyle = col;
+          ctx.fill();
+          ctx.beginPath();
+          ctx.arc(px, py, 3 * pp, 0, TAU);
+          ctx.fillStyle = '#fff';
+          ctx.fill();
+          if (z > 0.15) {
+            ctx.save();
+            ctx.font = `600 ${Math.round(11 * pp)}px Inter,sans-serif`;
+            const tw = ctx.measureText(label).width;
+            const lx = px + 10,
+              ly = py - 8;
+            ctx.fillStyle = 'rgba(255,255,255,0.88)';
+            roundRect(ctx, lx - 6, ly - 12, tw + 12, 18, 5);
+            ctx.fill();
+            ctx.fillStyle = col;
+            ctx.fillText(label, lx, ly);
+            ctx.restore();
+          }
+        });
+
+        // Globe shine
+        const shine = ctx.createRadialGradient(
+          cx - R * 0.42,
+          cy - R * 0.4,
+          0,
+          cx - R * 0.3,
+          cy - R * 0.3,
+          R * 0.7
+        );
+        shine.addColorStop(0, 'rgba(255,255,255,0.18)');
+        shine.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = shine;
+        ctx.beginPath();
+        ctx.arc(cx, cy, R, 0, TAU);
+        ctx.fill();
+
+        t++;
+        globeRafId = requestAnimationFrame(drawGlobe);
+      };
+      globeRafId = requestAnimationFrame(drawGlobe);
+    }
+
     if (!dot || !ring) return;
 
     let mx = 0;
@@ -723,8 +1027,10 @@ export default function Home() {
 
     return () => {
       cancelAnimationFrame(rafId);
+      cancelAnimationFrame(globeRafId);
       document.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('scroll', onScrollHeader);
+      window.removeEventListener('resize', globeResize);
       hoverTargets.forEach((el) => {
         el.removeEventListener('mouseenter', onEnter);
         el.removeEventListener('mouseleave', onLeave);
@@ -821,6 +1127,12 @@ export default function Home() {
 
       <section className="hero">
         <div className="hero-bg" id="heroBg" />
+        {/* GLOBE */}
+        <div className="hero-globe-wrap">
+          <div className="globe-canvas-wrap">
+            <canvas id="globeCanvas"></canvas>
+          </div>
+        </div>
         <div className="wrap hero-wrap">
           <div className="hero-content">
             <div className="hero-badge">
@@ -832,7 +1144,7 @@ export default function Home() {
             <h1 className="hero-h1">
               {t.hero.titleLines.map((line, i) => (
                 <span className="line" key={i}>
-                  <span className="inner" style={{ animationDelay: `${0.5 + i * 0.15}s` }}>
+                  <span className={`inner ${i > 0 ? 'blue' : ''}`} style={{ animationDelay: `${0.5 + i * 0.15}s` }}>
                     {line}
                   </span>
                 </span>
