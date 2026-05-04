@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 
 const css = `
@@ -493,6 +493,8 @@ header.scrolled{
 }
 .btn-nav:hover{background:linear-gradient(135deg,#223463,#3f73d6);}
 
+.mobile-toggle, .mobile-menu{display:none;}
+
 .hero-bg::after{
   background:
     linear-gradient(90deg, rgba(255,255,255,0.78) 0%, rgba(255,255,255,0.56) 46%, rgba(255,255,255,0.22) 78%, rgba(255,255,255,0.10) 100%),
@@ -573,6 +575,45 @@ footer .foot-col a:hover{color:#1e2f57;}
   .wrap,.nav-inner{padding:0 20px;}
   section{padding:72px 0;}
   .nav-pill{display:none;}
+  .nav-actions{display:none;}
+  .nav-inner{justify-content: space-between;}
+  .mobile-toggle{
+    display:flex;flex-direction:column;gap:5px;
+    width:30px;height:30px;justify-content:center;cursor:pointer;
+    z-index:1001;position:relative;
+  }
+  .mobile-toggle span{
+    width:100%;height:2px;background:#0f172a;border-radius:2px;
+    transition:all 0.3s;
+  }
+  .mobile-toggle.active span:nth-child(1){transform:rotate(45deg) translate(5px, 5px);}
+  .mobile-toggle.active span:nth-child(2){opacity:0;}
+  .mobile-toggle.active span:nth-child(3){transform:rotate(-45deg) translate(5px, -5px);}
+
+  .mobile-menu{
+    position:fixed;inset:0;background:#fff;z-index:1000;
+    display:flex;flex-direction:column;padding:100px 24px 40px;
+    transform:translateX(100%);transition:transform 0.4s cubic-bezier(.22,1,.36,1);
+  }
+  .mobile-menu.active{transform:none;}
+  .mobile-nav{display:flex;flex-direction:column;gap:24px;margin-bottom:40px;}
+  .mobile-nav a{
+    font-size:28px;font-weight:800;color:#0f172a;text-decoration:none;
+    opacity:0;transform:translateY(20px);transition:all 0.4s;
+  }
+  .mobile-menu.active .mobile-nav a{opacity:1;transform:none;}
+  .mobile-actions{margin-top:auto;display:flex;flex-direction:column;gap:20px;}
+  .mobile-lang{display:flex;gap:12px;}
+  .mobile-lang .lang-btn{
+    flex:1;padding:14px;border-radius:12px;background:#f1f5f9;
+    font-size:14px;font-weight:700;color:#475569;border:none;
+  }
+  .mobile-lang .lang-btn.active{background:#2E447A;color:#fff;}
+  .mobile-cta{
+    width:100%;padding:18px;background:#2E447A;color:#fff;
+    border-radius:14px;text-align:center;font-weight:800;text-decoration:none;
+  }
+
   .hero-h1{font-size:36px;line-height:1.1;letter-spacing:-.02em;}
   .hero-h1 .line{clip-path:inset(0 -100% 0 0);margin-bottom:4px;}
   .hero-content{margin-left:0;}
@@ -593,6 +634,15 @@ function scrollToId(id: string) {
 
 export default function Home() {
   const { language: lang, setLanguage: applyLang, t } = useLanguage();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }, [mobileMenuOpen]);
 
   useEffect(() => {
     const dot = document.getElementById('cursor-dot');
@@ -1054,7 +1104,13 @@ export default function Home() {
 
   const go = (e: React.MouseEvent, id: string) => {
     e.preventDefault();
+    setMobileMenuOpen(false);
     scrollToId(id);
+  };
+
+  const mobileApplyLang = (l: 'EN' | 'RU' | 'CHI') => {
+    applyLang(l);
+    setMobileMenuOpen(false);
   };
 
   const submitForm = (e: React.FormEvent) => {
@@ -1083,7 +1139,7 @@ export default function Home() {
 
       <header id="header">
         <div className="nav-inner">
-          <a href="#" className="logo">
+          <a href="#" className="logo" onClick={(e) => go(e, 'top')}>
             <img className="logo-img" src="/logo.png" alt="INLAW" />
             <div>
               <span className="logo-sub">{t.header.brandSubtitle}</span>
@@ -1120,6 +1176,42 @@ export default function Home() {
               </button>
             </div>
             <a href="#contact" onClick={(e) => go(e, 'contact')} className="btn-nav">
+              {t.hero.getConsultation}
+            </a>
+          </div>
+
+          <div className={`mobile-toggle ${mobileMenuOpen ? 'active' : ''}`} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+            <span />
+            <span />
+            <span />
+          </div>
+        </div>
+
+        <div className={`mobile-menu ${mobileMenuOpen ? 'active' : ''}`}>
+          <nav className="mobile-nav">
+            <a href="#services" onClick={(e) => go(e, 'services')} style={{ transitionDelay: '0.1s' }}>
+              {t.header.services}
+            </a>
+            <a href="#solutions" onClick={(e) => go(e, 'solutions')} style={{ transitionDelay: '0.15s' }}>
+              {t.header.solutions}
+            </a>
+            <a href="#about" onClick={(e) => go(e, 'about')} style={{ transitionDelay: '0.2s' }}>
+              {t.header.about}
+            </a>
+            <a href="#jurisdictions" onClick={(e) => go(e, 'jurisdictions')} style={{ transitionDelay: '0.25s' }}>
+              {t.header.jurisdictions}
+            </a>
+            <a href="#process" onClick={(e) => go(e, 'process')} style={{ transitionDelay: '0.3s' }}>
+              {t.header.process}
+            </a>
+          </nav>
+          <div className="mobile-actions">
+            <div className="mobile-lang">
+              <button className={`lang-btn ${lang === 'EN' ? 'active' : ''}`} onClick={() => mobileApplyLang('EN')}>EN</button>
+              <button className={`lang-btn ${lang === 'RU' ? 'active' : ''}`} onClick={() => mobileApplyLang('RU')}>RU</button>
+              <button className={`lang-btn ${lang === 'CHI' ? 'active' : ''}`} onClick={() => mobileApplyLang('CHI')}>CHI</button>
+            </div>
+            <a href="#contact" onClick={(e) => go(e, 'contact')} className="mobile-cta">
               {t.hero.getConsultation}
             </a>
           </div>
