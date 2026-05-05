@@ -333,11 +333,13 @@ export const translations = {
         ],
         legal: {
           name: 'Inlaw.kz',
-          bin: 'BIN: 200840900057',
+          bin: 'Business ID: 200840900057',
           license: 'AIFC License: AFSA-A-LA-2020-0030 dated 13.08.2020'
-        }
-      },
-      servicesPage: {
+        },
+        privacyPolicy: 'Privacy Policy'
+      }
+  },
+  RU: {
         title: 'Full Range of Services',
         subtitle: 'Professional support for your business in AIFC and international jurisdictions. From registration to comprehensive support.',
         categories: {
@@ -1430,7 +1432,8 @@ export const translations = {
           name: 'Inlaw.kz',
           bin: 'БИН: 200840900057',
           license: 'Лицензия МФЦА: AFSA-A-LA-2020-0030 от 13.08.2020'
-        }
+        },
+        privacyPolicy: 'Политика конфиденциальности'
       }
   },
   CHI: {
@@ -2146,7 +2149,8 @@ export const translations = {
           name: 'Inlaw.kz',
           bin: '商业识别码: 200840900057',
           license: 'AIFC 牌照: AFSA-A-LA-2020-0030 日期 13.08.2020'
-        }
+        },
+        privacyPolicy: '隐私政策'
       }
   }
 };

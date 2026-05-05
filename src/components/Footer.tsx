@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 
 export default function Footer() {
   const { t } = useLanguage();
@@ -59,8 +60,14 @@ export default function Footer() {
              )}
           </div>
 
-          <div className="text-slate-400 mt-2 md:mt-0">
-            &copy; {new Date().getFullYear()} Inlaw.web. {t.footer.rights}
+          <div className="text-slate-400 mt-2 md:mt-0 flex flex-col md:items-end gap-2">
+            <div>&copy; {new Date().getFullYear()} Inlaw.web. {t.footer.rights}</div>
+            <Link 
+              href="/privacy-policy" 
+              className="text-indigo-600 hover:text-indigo-800 transition-colors font-medium"
+            >
+              {t.footer.privacyPolicy}
+            </Link>
           </div>
         </div>
       </div>
