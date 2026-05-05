@@ -2,6 +2,7 @@
 
 import { useLanguage } from '@/context/LanguageContext';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 export default function PrivacyPolicy() {
   const { t, language } = useLanguage();
@@ -92,6 +93,15 @@ export default function PrivacyPolicy() {
   return (
     <div className="min-h-screen bg-slate-50 pt-32 pb-20">
       <div className="max-w-4xl mx-auto px-6">
+        <Link 
+          href="/" 
+          className="inline-flex items-center gap-2 text-slate-500 hover:text-[#2E447A] font-bold mb-8 transition-colors group"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="transform group-hover:-translate-x-1 transition-transform">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+          {language === 'RU' ? 'На главную' : language === 'CHI' ? '回到首页' : 'Back to Home'}
+        </Link>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

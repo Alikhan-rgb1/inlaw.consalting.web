@@ -437,7 +437,20 @@ footer{background:#fff;border-top:1px solid #e2e8f0;padding:72px 0 36px;}
 .foot-bot{border-top:1px solid #f1f5f9;padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
 .foot-legal{font-size:12px;color:#64748b;}
 .foot-legal b{color:#0f172a;display:block;font-size:13px;margin-bottom:2px;}
-.foot-copy{font-size:12px;color:#94a3b8;}
+.foot-copy{font-size:12px;color:#94a3b8;text-align:right;}
+.foot-privacy{
+  display:inline-block;
+  margin-top:6px;
+  color:#4f46e5;
+  font-weight:600;
+  text-decoration:none;
+  transition:all 0.2s;
+  padding:4px 0;
+}
+.foot-privacy:hover{
+  color:#2E447A;
+  text-decoration:underline;
+}
 
 /* ═══ KEYFRAMES ═══ */
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:none;}}
@@ -1204,6 +1217,9 @@ export default function Home() {
             <a href="#process" onClick={(e) => go(e, 'process')} style={{ transitionDelay: '0.3s' }}>
               {t.header.process}
             </a>
+            <Link href="/privacy-policy" style={{ transitionDelay: '0.35s', color: '#4f46e5' }}>
+              {t.footer.privacyPolicy}
+            </Link>
           </nav>
           <div className="mobile-actions">
             <div className="mobile-lang">
@@ -1992,7 +2008,13 @@ export default function Home() {
               <b>{t.footer.legal.name}</b>
               {t.footer.legal.bin} &nbsp;·&nbsp; {t.footer.legal.license}
             </div>
-            <div className="foot-copy">{t.footer.copy}</div>
+            <div className="foot-copy">
+              {t.footer.copy}
+              <br />
+              <Link href="/privacy-policy" className="foot-privacy">
+                {t.footer.privacyPolicy}
+              </Link>
+            </div>
           </div>
         </div>
       </footer>
