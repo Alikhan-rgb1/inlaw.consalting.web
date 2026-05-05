@@ -14,7 +14,7 @@ export default function PrivacyPolicy() {
       sections: [
         {
           title: '1. Introduction',
-          text: 'INLAW inc LTD. ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website inlaw.consulting.'
+          text: 'INLAW inc LTD. ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website inlaw.consulting. This Privacy Policy is also applicable to the Ancilla mobile app and other software published by Rakhymzhanov Berik and INLAW Inc. Ltd. on platforms like Google Play and the App Store.'
         },
         {
           title: '2. Information We Collect',
@@ -40,7 +40,7 @@ export default function PrivacyPolicy() {
       sections: [
         {
           title: '1. Введение',
-          text: 'INLAW inc LTD. («мы», «наш» или «нас») стремится защищать вашу конфиденциальность. Настоящая Политика конфиденциальности объясняет, как мы собираем, используем, раскрываем и защищаем вашу информацию, когда вы посещаете наш веб-сайт inlaw.consulting.'
+          text: 'INLAW inc LTD. («мы», «наш» или «нас») стремится защищать вашу конфиденциальность. Настоящая Политика конфиденциальности объясняет, как мы собираем, используем, раскрываем и защищаем вашу информацию, когда вы посещаете наш веб-сайт inlaw.consulting. Настоящая Политика конфиденциальности также применима к мобильному приложению Ancilla и другому программному обеспечению, опубликованному Рахымжановым Бериком и INLAW Inc. Ltd. на таких платформах, как Google Play и App Store.'
         },
         {
           title: '2. Информация, которую мы собираем',
@@ -66,7 +66,7 @@ export default function PrivacyPolicy() {
       sections: [
         {
           title: '1. 简介',
-          text: 'INLAW inc LTD.（“我们”或“我们的”）致力于保护您的隐私。本隐私政策解释了当您访问我们的网站 inlaw.consulting 时，我们如何收集、使用、披露和保护您的信息。'
+          text: 'INLAW inc LTD.（“我们”或“我们的”）致力于保护您的隐私。本隐私政策解释了当您访问我们的网站 inlaw.consulting 时，我们如何收集、使用、披露和保护您的信息。本隐私政策同样适用于 Ancilla 移动应用程序以及 Rakhymzhanov Berik 和 INLAW Inc. Ltd. 在 Google Play 和 App Store 等平台发布的其他软件。'
         },
         {
           title: '2. 我们收集的信息',
