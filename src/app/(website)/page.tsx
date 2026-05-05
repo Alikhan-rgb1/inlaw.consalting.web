@@ -1235,7 +1235,7 @@ export default function Home() {
               </div>
             </div>
             <h1 className="hero-h1">
-              {t.hero.titleLines.map((line, i) => (
+              {t.hero.titleLines.map((line: string, i: number) => (
                 <span className="line" key={i}>
                   <span className={`inner ${i > 0 ? 'blue' : ''}`} style={{ animationDelay: `${0.5 + i * 0.15}s` }}>
                     {line}

@@ -8,11 +8,13 @@ import { useLanguage } from '@/context/LanguageContext';
 
 export default function AifcSolutionPage() {
   const { t } = useLanguage();
-  const includedItems: string[] = t.solutionsPages.aifc.includedItems;
-  const targetAudience: string[] = t.solutionsPages.aifc.targetAudience;
-  const whyAifc: string[] = t.solutionsPages.aifc.whyJurisdictionItems;
-  const whyInlaw: string[] = t.solutionsPages.aifc.whyInlawItems;
-  const processSteps: { step: string; title: string; desc: string }[] = t.solutionsPages.aifc.processSteps;
+  const aifc = (t as any).solutionsPages.aifc;
+  const common = (t as any).solutionsPages.common;
+  const includedItems: string[] = aifc.includedItems;
+  const targetAudience: string[] = aifc.targetAudience;
+  const whyAifc: string[] = aifc.whyJurisdictionItems;
+  const whyInlaw: string[] = aifc.whyInlawItems;
+  const processSteps: { step: string; title: string; desc: string }[] = aifc.processSteps;
 
   const container = {
     hidden: { opacity: 0 },
@@ -57,13 +59,13 @@ export default function AifcSolutionPage() {
             className="max-w-4xl"
           >
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
-              {t.solutionsPages.aifc.title} <br />
+              {aifc.title} <br />
               <span className="text-blue-200 text-3xl md:text-4xl font-normal block mt-4">
-                {t.solutionsPages.aifc.subtitle}
+                {aifc.subtitle}
               </span>
             </h1>
             <p className="text-xl text-blue-100 max-w-2xl leading-relaxed mb-10">
-              {t.solutionsPages.aifc.description}
+              {aifc.description}
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
@@ -88,13 +90,13 @@ export default function AifcSolutionPage() {
             className="max-w-3xl mx-auto text-center"
           >
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-8">
-              {t.solutionsPages.aifc.aboutTitle}
+              {aifc.aboutTitle}
             </h2>
             <p className="text-xl text-slate-600 leading-relaxed mb-6">
-              {t.solutionsPages.aifc.aboutDescription}
+              {aifc.aboutDescription}
             </p>
             <p className="text-xl text-slate-900 font-medium leading-relaxed">
-              {t.solutionsPages.aifc.aboutSubDescription}
+              {aifc.aboutSubDescription}
             </p>
           </motion.div>
         </div>
@@ -109,7 +111,7 @@ export default function AifcSolutionPage() {
             viewport={{ once: true }}
             className="text-3xl md:text-4xl font-bold text-slate-900 mb-12 text-center"
           >
-            {t.solutionsPages.common.whatIsIncluded}
+            {common.whatIsIncluded}
           </motion.h2>
 
           <motion.div 

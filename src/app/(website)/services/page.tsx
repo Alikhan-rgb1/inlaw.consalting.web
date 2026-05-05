@@ -7,7 +7,7 @@ import { useLanguage } from '@/context/LanguageContext';
 
 export default function ServicesPage() {
   const { t } = useLanguage();
-  const { categories } = t.servicesPage;
+  const { categories } = (t as any).servicesPage;
   
   const serviceCategories = [
     {
@@ -84,10 +84,10 @@ export default function ServicesPage() {
           className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
         >
           <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight tracking-tight">
-            {t.servicesPage.title}
+            {(t as any).servicesPage.title}
           </h1>
           <p className="text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
-            {t.servicesPage.subtitle}
+            {(t as any).servicesPage.subtitle}
           </p>
         </motion.div>
       </div>
@@ -115,7 +115,7 @@ export default function ServicesPage() {
                     {category.title}
                   </h3>
                   <ul className="space-y-3">
-                    {category.items.map((item, idx) => (
+                    {category.items.map((item: string, idx: number) => (
                       <li key={idx} className="flex items-start gap-3 text-slate-600 text-sm leading-relaxed">
                         <span className="w-1.5 h-1.5 rounded-full bg-[#2E447A]/60 mt-2 flex-shrink-0"></span>
                         <span>{item}</span>

@@ -8,8 +8,8 @@ import { useLanguage } from '@/context/LanguageContext';
 
 export default function HoldingKzUaeSolutionPage() {
   const { t } = useLanguage();
-  const holding = t.solutionsPages.holding;
-  const common = t.solutionsPages.common;
+  const holding = (t as any).solutionsPages.holding;
+  const common = (t as any).solutionsPages.common;
 
   const includedItems = holding.includedItems || [];
 
@@ -126,7 +126,7 @@ export default function HoldingKzUaeSolutionPage() {
             viewport={{ once: true }}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
           >
-            {includedItems.map((item, index) => (
+            {includedItems.map((item: string, index: number) => (
               <motion.div 
                 key={index}
                 variants={itemVariant}
@@ -160,7 +160,7 @@ export default function HoldingKzUaeSolutionPage() {
                 {holding.whoIsForDesc}
               </p>
               <div className="space-y-4">
-                {targetAudience.map((item, index) => (
+                {targetAudience.map((item: string, index: number) => (
                   <div key={index} className="flex items-center gap-4 p-4 bg-slate-50 rounded-xl border border-slate-100">
                     <div className="w-2 h-2 rounded-full bg-[#2E447A]"></div>
                     <span className="text-lg text-slate-800 font-medium">{item}</span>
@@ -203,7 +203,7 @@ export default function HoldingKzUaeSolutionPage() {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {whyHolding.map((item, index) => (
+            {whyHolding.map((item: string, index: number) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
@@ -237,7 +237,7 @@ export default function HoldingKzUaeSolutionPage() {
           </motion.h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {whyInlaw.map((item, index) => (
+            {whyInlaw.map((item: string, index: number) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
@@ -268,7 +268,7 @@ export default function HoldingKzUaeSolutionPage() {
           </motion.h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {processSteps.map((step, index) => (
+            {processSteps.map((step: any, index: number) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
@@ -320,7 +320,7 @@ export default function HoldingKzUaeSolutionPage() {
               <div className="bg-white/5 rounded-2xl p-8 border border-white/10">
                 <h2 className="text-3xl font-bold mb-8">{holding.timeline?.resultTitle}</h2>
                 <ul className="space-y-4">
-                  {(holding.timeline?.resultItems || []).map((item, idx) => (
+                  {(holding.timeline?.resultItems || []).map((item: string, idx: number) => (
                     <li key={idx} className="flex items-start gap-3">
                       <div className="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold text-white">
                         ✓

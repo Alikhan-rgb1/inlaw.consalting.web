@@ -33,7 +33,7 @@ export default function Footer() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 mb-16">
-          {t.footer.locations && t.footer.locations.map((loc, index) => (
+          {t.footer.locations && t.footer.locations.map((loc: any, index: number) => (
             <div key={index} className="flex flex-col space-y-3 text-left group">
               <h3 className="font-semibold text-slate-900 tracking-wide text-sm uppercase">{loc.city}</h3>
               <p className="text-xs leading-relaxed text-slate-500 group-hover:text-slate-700 transition-colors duration-300 min-h-[40px]">

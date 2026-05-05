@@ -337,9 +337,8 @@ export const translations = {
           license: 'AIFC License: AFSA-A-LA-2020-0030 dated 13.08.2020'
         },
         privacyPolicy: 'Privacy Policy'
-      }
-  },
-  RU: {
+      },
+    servicesPage: {
         title: 'Full Range of Services',
         subtitle: 'Professional support for your business in AIFC and international jurisdictions. From registration to comprehensive support.',
         categories: {

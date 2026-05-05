@@ -8,8 +8,8 @@ import { useLanguage } from '@/context/LanguageContext';
 
 export default function DubaiUaeSolutionPage() {
   const { t } = useLanguage();
-  const dubai = t.solutionsPages.dubai;
-  const common = t.solutionsPages.common;
+  const dubai = (t as any).solutionsPages.dubai;
+  const common = (t as any).solutionsPages.common;
 
   // Use optional chaining or fallback to empty array to prevent runtime errors if translation is missing
   const includedItems = dubai?.includedItems || [];

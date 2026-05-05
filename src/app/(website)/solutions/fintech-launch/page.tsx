@@ -8,8 +8,8 @@ import { useLanguage } from '@/context/LanguageContext';
 
 export default function FintechLaunchPage() {
   const { t } = useLanguage();
-  const fintech = t.solutionsPages.fintech;
-  const common = t.solutionsPages.common;
+  const fintech = (t as any).solutionsPages.fintech;
+  const common = (t as any).solutionsPages.common;
 
   const includedItems = fintech.includedItems || [];
   const targetAudience = fintech.targetAudience || [];
@@ -122,7 +122,7 @@ export default function FintechLaunchPage() {
             viewport={{ once: true }}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
           >
-            {includedItems.map((item, index) => (
+            {includedItems.map((item: string, index: number) => (
               <motion.div 
                 key={index}
                 variants={itemVariant}
@@ -156,7 +156,7 @@ export default function FintechLaunchPage() {
                 {fintech.whoIsForDesc}
               </p>
               <div className="space-y-4">
-                {targetAudience.map((item, index) => (
+                {targetAudience.map((item: string, index: number) => (
                   <div key={index} className="flex items-center gap-4 p-4 bg-slate-50 rounded-xl border border-slate-100">
                     <div className="w-2 h-2 rounded-full bg-[#2E447A]"></div>
                     <span className="text-lg text-slate-800 font-medium">{item}</span>
@@ -199,7 +199,7 @@ export default function FintechLaunchPage() {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {whyInlaw.map((item, index) => (
+            {whyInlaw.map((item: string, index: number) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
@@ -241,7 +241,7 @@ export default function FintechLaunchPage() {
           </motion.p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {jurisdictions.map((item, index) => (
+            {jurisdictions.map((item: string, index: number) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
@@ -269,7 +269,7 @@ export default function FintechLaunchPage() {
           </motion.h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {processSteps.map((step, index) => (
+            {processSteps.map((step: any, index: number) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
@@ -330,7 +330,7 @@ export default function FintechLaunchPage() {
               <div className="bg-white/5 rounded-2xl p-8 border border-white/10">
                 <h2 className="text-3xl font-bold mb-8">{fintech.timeline?.resultTitle}</h2>
                 <ul className="space-y-4">
-                  {(fintech.timeline?.resultItems || []).map((item, idx) => (
+                  {(fintech.timeline?.resultItems || []).map((item: string, idx: number) => (
                     <li key={idx} className="flex items-start gap-3">
                       <div className="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold text-white">
                         ✓
