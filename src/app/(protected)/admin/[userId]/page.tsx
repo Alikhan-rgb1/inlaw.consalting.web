@@ -33,35 +33,6 @@ export default async function ClientDetailPage({ params }: PageProps) {
     .eq('id', userId)
     .single();
 
-  // Labels mapping
-  const fieldLabels: Record<string, string> = {
-    'activities_1': 'Виды деятельности (1)',
-    'activities_2': 'Виды деятельности (2)',
-    'activities_3': 'Виды деятельности (3)',
-    'countries': 'Страны деятельности',
-    'company_name_1': 'Название компании (1)',
-    'company_name_2': 'Название компании (2)',
-    'company_name_3': 'Название компании (3)',
-    'shareholders': 'Кол-во акционеров',
-    'visas': 'Кол-во сотрудников для визы',
-    'full_name': 'ФИО (как в паспорте)',
-    'position': 'Должность',
-    'passport': 'Паспорт (серия, номер)',
-    'email': 'Email адрес',
-    'contact_number': 'Контактный номер',
-    'country': 'Страна',
-    'address': 'Адрес проживания',
-    'uae_visit': 'Были ли ранее в ОАЭ (Да/Нет)'
-  };
-
-  // Define the order of keys as they appear in the form
-  const fieldOrder = [
-    'activities_1', 'activities_2', 'activities_3', 'countries', // 1. General Info
-    'company_name_1', 'company_name_2', 'company_name_3', // 2. Company Names
-    'shareholders', 'visas', // 3. Structure
-    'full_name', 'position', 'passport', 'email', 'contact_number', 'country', 'address', 'uae_visit' // 4. Person Data
-  ];
-
   // Fetch latest application
   const { data: application } = await supabaseAdmin
     .from('applications')
@@ -70,18 +41,6 @@ export default async function ClientDetailPage({ params }: PageProps) {
     .order('created_at', { ascending: false })
     .limit(1)
     .single();
-
-  // Helper to sort form data keys
-  const sortedFormData = application?.form_data 
-    ? Object.entries(application.form_data).sort((a, b) => {
-        const indexA = fieldOrder.indexOf(a[0]);
-        const indexB = fieldOrder.indexOf(b[0]);
-        if (indexA === -1 && indexB === -1) return 0;
-        if (indexA === -1) return 1;
-        if (indexB === -1) return -1;
-        return indexA - indexB;
-      })
-    : [];
 
   if (clientError || !client) {
       // console.error("Client fetch error:", clientError); // Removing server-side console log that might cause hydration issues or just clutter
@@ -119,7 +78,14 @@ export default async function ClientDetailPage({ params }: PageProps) {
               <Link href="/admin" className="text-sm text-slate-500 hover:text-indigo-600 mb-2 inline-block">
                   &larr; Назад к списку
               </Link>
-              <h2 className="text-2xl font-bold text-slate-900">{client.company_name || 'Название компании отсутствует'}</h2>
+              <div className="flex items-center gap-3">
+                <h2 className="text-2xl font-bold text-slate-900">{client.company_name || 'Название компании отсутствует'}</h2>
+                <span className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
+                  client.office === 'astana' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800'
+                }`}>
+                  {client.office === 'astana' ? 'Астана' : 'Дубай'}
+                </span>
+              </div>
               <p className="text-slate-500">{client.full_name} • {client.email}</p>
           </div>
           <div className="flex gap-3">
@@ -189,16 +155,37 @@ export default async function ClientDetailPage({ params }: PageProps) {
                         {/* 3. СТРУКТУРА КОМПАНИИ */}
                         <section>
                             <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3 border-b border-slate-200 pb-1">3. СТРУКТУРА КОМПАНИИ</h4>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <dt className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Кол-во акционеров</dt>
-                                    <dd className="text-sm text-slate-900">{application.form_data['shareholders'] || '-'}</dd>
-                                </div>
-                                <div>
-                                    <dt className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Кол-во сотрудников для визы</dt>
-                                    <dd className="text-sm text-slate-900">{application.form_data['visas'] || '-'}</dd>
-                                </div>
-                            </div>
+                            {application.office === 'astana' ? (
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                  <div className="md:col-span-2">
+                                      <dt className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Организационно-правовая форма</dt>
+                                      <dd className="text-sm text-slate-900">{application.form_data['legal_form'] || '-'}</dd>
+                                  </div>
+                                  <div>
+                                      <dt className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Уставный капитал (USD)</dt>
+                                      <dd className="text-sm text-slate-900">{application.form_data['share_capital'] || '-'}</dd>
+                                  </div>
+                                  <div>
+                                      <dt className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Кол-во акционеров</dt>
+                                      <dd className="text-sm text-slate-900">{application.form_data['shareholders'] || '-'}</dd>
+                                  </div>
+                                  <div>
+                                      <dt className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Кол-во директоров</dt>
+                                      <dd className="text-sm text-slate-900">{application.form_data['directors'] || '-'}</dd>
+                                  </div>
+                              </div>
+                            ) : (
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                  <div>
+                                      <dt className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Кол-во акционеров</dt>
+                                      <dd className="text-sm text-slate-900">{application.form_data['shareholders'] || '-'}</dd>
+                                  </div>
+                                  <div>
+                                      <dt className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Кол-во сотрудников для визы</dt>
+                                      <dd className="text-sm text-slate-900">{application.form_data['visas'] || '-'}</dd>
+                                  </div>
+                              </div>
+                            )}
                         </section>
 
                         {/* 4. ДАННЫЕ СОТРУДНИКА */}
@@ -233,10 +220,12 @@ export default async function ClientDetailPage({ params }: PageProps) {
                                     <dt className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Адрес проживания</dt>
                                     <dd className="text-sm text-slate-900">{application.form_data['address'] || '-'}</dd>
                                 </div>
-                                <div>
-                                    <dt className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Были ли ранее в ОАЭ</dt>
-                                    <dd className="text-sm text-slate-900">{application.form_data['uae_visit'] || '-'}</dd>
-                                </div>
+                                {application.office !== 'astana' && (
+                                  <div>
+                                      <dt className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Были ли ранее в ОАЭ</dt>
+                                      <dd className="text-sm text-slate-900">{application.form_data['uae_visit'] || '-'}</dd>
+                                  </div>
+                                )}
                             </dl>
                         </section>
                     </div>

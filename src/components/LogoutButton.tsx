@@ -2,10 +2,10 @@
 
 import { signOut } from "next-auth/react";
 
-export default function LogoutButton() {
+export default function LogoutButton({ callbackUrl = '/dubai' }: { callbackUrl?: string }) {
   return (
     <button
-      onClick={() => signOut({ callbackUrl: '/dubai' })}
+      onClick={() => signOut({ callbackUrl })}
       className="text-sm font-medium text-red-600 hover:text-red-800 transition-colors"
     >
       Sign out

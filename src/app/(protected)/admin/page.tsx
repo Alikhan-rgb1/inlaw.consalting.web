@@ -70,6 +70,7 @@ export default async function AdminPage() {
             <thead className="bg-slate-50">
               <tr>
                 <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-slate-900 sm:pl-6">Компания / Имя</th>
+                <th scope="col" className="hidden sm:table-cell px-3 py-3.5 text-left text-sm font-semibold text-slate-900">Офис</th>
                 <th scope="col" className="hidden sm:table-cell px-3 py-3.5 text-left text-sm font-semibold text-slate-900">Контакты</th>
                 <th scope="col" className="hidden sm:table-cell px-3 py-3.5 text-left text-sm font-semibold text-slate-900">Статус</th>
                 <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
@@ -89,6 +90,13 @@ export default async function AdminPage() {
                       <div className="sm:hidden text-xs text-slate-400 mt-1">
                           {app.profiles?.email}
                       </div>
+                    </td>
+                    <td className="hidden sm:table-cell whitespace-nowrap px-3 py-4 text-sm">
+                      <span className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
+                        app.office === 'astana' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800'
+                      }`}>
+                        {app.office === 'astana' ? 'Астана' : 'Дубай'}
+                      </span>
                     </td>
                     <td className="hidden sm:table-cell whitespace-nowrap px-3 py-4 text-sm text-slate-500">
                       <div className="text-slate-900">{app.profiles?.email}</div>
@@ -130,6 +138,9 @@ export default async function AdminPage() {
                         -
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500">
+                        -
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500">
                         <span className="inline-flex rounded-full bg-gray-100 px-2 text-xs font-semibold leading-5 text-gray-800">
                           Storage Only
                         </span>
@@ -141,7 +152,7 @@ export default async function AdminPage() {
                 ))
               ) : (
                 <tr>
-                    <td colSpan={4} className="py-8 text-center text-sm text-slate-500">
+                    <td colSpan={5} className="py-8 text-center text-sm text-slate-500">
                         Клиенты не найдены.
                     </td>
                 </tr>

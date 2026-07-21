@@ -1358,6 +1358,14 @@ export default function Home() {
                 <br />
                 <span className="jcard-tel">+7 700 146 6646 · +7 700 146 6601</span>
               </div>
+              <div className="jcard-portal">
+                <a className="jportal" href="/astana">
+                  {t.common.clientPortal}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d="M5 12h14M13 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
             </div>
             <div className="jcard r d2">
               <div className="jcard-glow" />
