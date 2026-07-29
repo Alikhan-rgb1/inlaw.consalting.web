@@ -86,6 +86,9 @@ export default async function AdminPage() {
                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
                       <div className="font-medium text-slate-900">{app.profiles?.company_name || 'N/A'}</div>
                       <div className="text-slate-500">{app.profiles?.full_name}</div>
+                      {app.application_type === 'post_registration_change' && (
+                        <div className="text-xs text-indigo-600 mt-0.5">Пострегистрационные изменения</div>
+                      )}
                       {/* Mobile Only Info */}
                       <div className="sm:hidden text-xs text-slate-400 mt-1">
                           {app.profiles?.email}

@@ -122,6 +122,7 @@ create table if not exists public.applications (
   status text default 'New', -- New, In Progress, Done, Rejected
   form_data jsonb default '{}'::jsonb,
   office text default 'dubai', -- 'dubai' (IFZA) or 'astana' (AIFC)
+  application_type text default 'aifc_registration', -- 'aifc_registration' or 'post_registration_change'
   created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 
@@ -129,6 +130,9 @@ do $$
 begin
   if not exists (select 1 from information_schema.columns where table_name = 'applications' and column_name = 'office') then
     alter table public.applications add column office text default 'dubai';
+  end if;
+  if not exists (select 1 from information_schema.columns where table_name = 'applications' and column_name = 'application_type') then
+    alter table public.applications add column application_type text default 'aifc_registration';
   end if;
 end $$;
 

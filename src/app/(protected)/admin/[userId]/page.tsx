@@ -6,6 +6,7 @@ import Link from "next/link";
 import { DocumentActions } from "@/components/DocumentActions";
 import { ApplicationStatus } from "@/components/ApplicationStatus";
 import { AstanaApplicationSummary } from "@/components/AstanaApplicationSummary";
+import { PostRegistrationSummary, CHANGE_TYPE_LABELS_RU, REQUIRED_DOCS_PR } from "@/components/PostRegistrationSummary";
 import { AdminApplicationResults } from "@/components/AdminApplicationResults";
 
 interface PageProps {
@@ -156,7 +157,12 @@ export default async function ClientDetailPage({ params, searchParams }: PagePro
                           {app.office === 'astana' ? 'Астана' : 'Дубай'}
                         </span>
                         <span className="text-xs text-slate-500">Отправлено: {new Date(app.created_at).toLocaleString()}</span>
-                        {app.office === 'astana' && (
+                        {app.office === 'astana' && app.application_type === 'post_registration_change' && (
+                          <span className="inline-flex rounded-full px-2 text-xs font-semibold leading-5 bg-slate-100 text-slate-600">
+                            Пострегистрационные изменения
+                          </span>
+                        )}
+                        {app.office === 'astana' && app.application_type !== 'post_registration_change' && (
                           <Link
                             href={`/astana/print/${app.id}`}
                             target="_blank"
@@ -172,7 +178,11 @@ export default async function ClientDetailPage({ params, searchParams }: PagePro
                   <div className="bg-slate-50 rounded-md p-4 overflow-x-auto mb-4">
                       {app.form_data && Object.keys(app.form_data).length > 0 ? (
                           app.office === 'astana' ? (
-                            <AstanaApplicationSummary formData={app.form_data} />
+                            app.application_type === 'post_registration_change' ? (
+                              <PostRegistrationSummary formData={app.form_data} />
+                            ) : (
+                              <AstanaApplicationSummary formData={app.form_data} />
+                            )
                           ) : (
                           <div className="space-y-6">
                               {/* 1. ОБЩАЯ ИНФОРМАЦИЯ */}
@@ -263,6 +273,36 @@ export default async function ClientDetailPage({ params, searchParams }: PagePro
                           <p className="text-sm text-slate-500 italic">Нет данных формы.</p>
                       )}
                   </div>
+
+                  {app.office === 'astana' && app.application_type === 'post_registration_change' && app.form_data && (
+                    <div className="bg-indigo-50 border border-indigo-100 rounded-md p-4">
+                        <h4 className="text-xs font-bold text-indigo-900 uppercase tracking-wider mb-3">Информация для менеджера</h4>
+                        <div className="mb-3">
+                            <p className="text-xs font-semibold text-indigo-700 uppercase tracking-wider mb-1.5">Выбранные изменения</p>
+                            <div className="flex flex-wrap gap-1.5">
+                                {(Array.isArray(app.form_data.changeTypes) ? app.form_data.changeTypes : []).map((c: string) => (
+                                    <span key={c} className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-white text-indigo-700 border border-indigo-200">
+                                        {CHANGE_TYPE_LABELS_RU[c] || c}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                        <div>
+                            <p className="text-xs font-semibold text-indigo-700 uppercase tracking-wider mb-1.5">Документы</p>
+                            <ul className="space-y-1">
+                                {REQUIRED_DOCS_PR.map((doc) => {
+                                    const uploaded = (documents || []).some((d) => d.doc_type === doc.id && d.uploaded_by !== 'admin');
+                                    return (
+                                        <li key={doc.id} className="text-sm flex items-center gap-2">
+                                            <span className={uploaded ? 'text-green-600' : 'text-slate-400'}>{uploaded ? '✓' : '○'}</span>
+                                            <span className={uploaded ? 'text-slate-800' : 'text-slate-400'}>{doc.label}</span>
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        </div>
+                    </div>
+                  )}
               </div>
             );
           })}

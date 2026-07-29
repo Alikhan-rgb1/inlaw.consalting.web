@@ -469,6 +469,7 @@ function AifcApplicationForm() {
             body: JSON.stringify({
               id: editingAppId || undefined,
               formData: { ...formData, individuals, activities },
+              applicationType: 'aifc_registration',
             }),
         });
 

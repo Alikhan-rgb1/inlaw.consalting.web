@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
 import { AstanaApplicationSummary } from '@/components/AstanaApplicationSummary';
+import { PostRegistrationSummary } from '@/components/PostRegistrationSummary';
 import { getSignedUrl } from '@/app/actions';
 
 interface UserProfile {
@@ -53,12 +54,12 @@ export default function AstanaDashboardPage() {
       anketaAifcTitle: 'AIFC Company Registration',
       anketaAifcDesc: 'Full company registration application for the Astana International Financial Centre (AFSA).',
       startApplication: 'Start / continue',
-      anketaComingSoonTitle: 'Second application form',
-      anketaComingSoonDesc: 'A new application form will appear here soon.',
-      comingSoon: 'Coming soon',
+      anketaPostRegTitle: 'Post-Registration Changes',
+      anketaPostRegDesc: 'Report changes to an already registered AIFC company — director, address, UBO, share capital, and more.',
       myApplications: 'My Applications',
       noApplications: 'No applications yet — choose a form above to get started.',
-      formTitle: 'AIFC Company Registration',
+      formTitleAifc: 'AIFC Company Registration',
+      formTitlePostReg: 'Post-Registration Changes',
       signingDocLink: 'Signing document',
       applicationDetails: 'Application Details',
       resultDocsTitle: 'Documents from INLAW',
@@ -86,12 +87,12 @@ export default function AstanaDashboardPage() {
       anketaAifcTitle: 'Регистрация компании в AIFC',
       anketaAifcDesc: 'Полная анкета для регистрации компании в Международном финансовом центре «Астана» (AFSA).',
       startApplication: 'Начать / продолжить',
-      anketaComingSoonTitle: 'Вторая анкета',
-      anketaComingSoonDesc: 'Скоро здесь появится ещё одна анкета.',
-      comingSoon: 'Скоро',
+      anketaPostRegTitle: 'Пострегистрационные изменения',
+      anketaPostRegDesc: 'Сообщите об изменениях в уже зарегистрированной компании AIFC — директор, адрес, UBO, уставный капитал и другое.',
       myApplications: 'Мои заявки',
       noApplications: 'Пока нет заявок — выберите анкету выше, чтобы начать.',
-      formTitle: 'Регистрация компании в AIFC',
+      formTitleAifc: 'Регистрация компании в AIFC',
+      formTitlePostReg: 'Пострегистрационные изменения',
       signingDocLink: 'Документ для подписания',
       applicationDetails: 'Данные заявки',
       resultDocsTitle: 'Документы от INLAW',
@@ -119,12 +120,12 @@ export default function AstanaDashboardPage() {
       anketaAifcTitle: 'AIFC 公司注册',
       anketaAifcDesc: '阿斯塔纳国际金融中心 (AFSA) 完整公司注册申请表。',
       startApplication: '开始 / 继续',
-      anketaComingSoonTitle: '第二份申请表',
-      anketaComingSoonDesc: '新的申请表即将在此处上线。',
-      comingSoon: '即将推出',
+      anketaPostRegTitle: '注册后变更',
+      anketaPostRegDesc: '报告已注册 AIFC 公司的变更 — 董事、地址、UBO、注册股本等。',
       myApplications: '我的申请',
       noApplications: '暂无申请 — 请选择上方的申请表开始。',
-      formTitle: 'AIFC 公司注册',
+      formTitleAifc: 'AIFC 公司注册',
+      formTitlePostReg: '注册后变更',
       signingDocLink: '签署文件',
       applicationDetails: '申请详情',
       resultDocsTitle: '来自INLAW的文件',
@@ -194,6 +195,11 @@ export default function AstanaDashboardPage() {
       default: return status;
     }
   };
+
+  const appTitle = (app: any) => (app.application_type === 'post_registration_change' ? t.formTitlePostReg : t.formTitleAifc);
+  const appEditHref = (app: any) => (app.application_type === 'post_registration_change'
+    ? `/astana/application/post-registration?edit=${app.id}`
+    : `/astana/application/aifc?edit=${app.id}`);
 
   const counts = {
     total: applications.length,
@@ -318,20 +324,26 @@ export default function AstanaDashboardPage() {
             </div>
           </Link>
 
-          <div className="relative bg-slate-50 rounded-xl border border-dashed border-slate-200 p-6 flex flex-col justify-between opacity-70">
+          <Link
+            href="/astana/application/post-registration"
+            className="group bg-white rounded-xl shadow-lg border border-slate-100 p-6 flex flex-col justify-between hover:border-indigo-300 hover:shadow-xl transition-all duration-200"
+          >
             <div>
-              <div className="h-11 w-11 rounded-lg bg-slate-200 text-slate-500 flex items-center justify-center mb-4">
+              <div className="h-11 w-11 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center mb-4">
                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                 </svg>
               </div>
-              <h5 className="text-base font-bold text-slate-600">{t.anketaComingSoonTitle}</h5>
-              <p className="mt-1 text-sm text-slate-400">{t.anketaComingSoonDesc}</p>
+              <h5 className="text-base font-bold text-slate-900 group-hover:text-indigo-700 transition-colors">{t.anketaPostRegTitle}</h5>
+              <p className="mt-1 text-sm text-slate-500">{t.anketaPostRegDesc}</p>
             </div>
-            <span className="mt-5 inline-flex w-fit items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-slate-200 text-slate-500">
-              {t.comingSoon}
-            </span>
-          </div>
+            <div className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-indigo-600 group-hover:text-indigo-800">
+              {t.startApplication}
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </div>
+          </Link>
         </div>
       </div>
 
@@ -351,7 +363,7 @@ export default function AstanaDashboardPage() {
                 >
                   <div>
                     <p className="text-sm font-bold text-slate-800">
-                      {t.formTitle}
+                      {appTitle(app)}
                     </p>
                     <p className="text-xs text-slate-500 mt-0.5">
                       {new Date(app.created_at).toLocaleDateString()}
@@ -370,14 +382,16 @@ export default function AstanaDashboardPage() {
                       }`}></span>
                       {statusLabel(app.status)}
                     </span>
-                    <Link
-                      href={`/astana/print/${app.id}`}
-                      target="_blank"
-                      onClick={(e) => e.stopPropagation()}
-                      className="text-xs font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap"
-                    >
-                      {t.signingDocLink}
-                    </Link>
+                    {app.application_type !== 'post_registration_change' && (
+                      <Link
+                        href={`/astana/print/${app.id}`}
+                        target="_blank"
+                        onClick={(e) => e.stopPropagation()}
+                        className="text-xs font-medium text-indigo-600 hover:text-indigo-800 whitespace-nowrap"
+                      >
+                        {t.signingDocLink}
+                      </Link>
+                    )}
                   </div>
                 </div>
               ))}
@@ -407,7 +421,11 @@ export default function AstanaDashboardPage() {
             </button>
           </div>
           <div className="p-5 overflow-y-auto flex-1">
-            <AstanaApplicationSummary formData={viewingApp.form_data} />
+            {viewingApp.application_type === 'post_registration_change' ? (
+              <PostRegistrationSummary formData={viewingApp.form_data} />
+            ) : (
+              <AstanaApplicationSummary formData={viewingApp.form_data} />
+            )}
 
             <div className="mt-6 pt-6 border-t border-slate-200">
               <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3">{t.resultDocsTitle}</h4>
@@ -454,18 +472,20 @@ export default function AstanaDashboardPage() {
               {t.delete}
             </button>
             <Link
-              href={`/astana/application/aifc?edit=${viewingApp.id}`}
+              href={appEditHref(viewingApp)}
               className="px-4 py-2 text-sm font-bold text-slate-700 border border-slate-300 rounded-lg hover:bg-slate-50"
             >
               {t.edit}
             </Link>
-            <Link
-              href={`/astana/print/${viewingApp.id}`}
-              target="_blank"
-              className="px-4 py-2 text-sm font-bold text-white bg-[#2E447A] rounded-lg hover:bg-indigo-700 inline-flex items-center"
-            >
-              {t.downloadSigningDoc}
-            </Link>
+            {viewingApp.application_type !== 'post_registration_change' && (
+              <Link
+                href={`/astana/print/${viewingApp.id}`}
+                target="_blank"
+                className="px-4 py-2 text-sm font-bold text-white bg-[#2E447A] rounded-lg hover:bg-indigo-700 inline-flex items-center"
+              >
+                {t.downloadSigningDoc}
+              </Link>
+            )}
           </div>
         </div>
       </div>

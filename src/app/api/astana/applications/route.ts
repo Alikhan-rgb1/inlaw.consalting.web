@@ -25,7 +25,7 @@ export async function POST(request: Request) {
 
   try {
       const body = await request.json();
-      const { formData } = body;
+      const { formData, applicationType } = body;
 
       const { data, error } = await supabaseAdmin
           .from('applications')
@@ -33,7 +33,8 @@ export async function POST(request: Request) {
               user_id: userId,
               status: 'In Progress',
               form_data: formData,
-              office: 'astana'
+              office: 'astana',
+              application_type: applicationType || 'aifc_registration'
           })
           .select()
           .single();
