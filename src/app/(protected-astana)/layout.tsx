@@ -24,7 +24,7 @@ export default async function ProtectedAstanaLayout({ children }: { children: Re
     <html lang="en">
       <body className="min-h-screen bg-slate-50 text-slate-900">
         <Providers>
-            <nav className="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-50">
+            <nav className="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-50 print:hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-18">
                         <div className="flex items-center gap-8">

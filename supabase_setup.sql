@@ -113,68 +113,8 @@ on public.profiles for all
 using ( auth.role() = 'service_role' )
 with check ( auth.role() = 'service_role' );
 
--- ============ 2. DOCUMENTS ============
-
-create table if not exists public.documents (
-  id uuid default gen_random_uuid() primary key,
-  user_id uuid not null references public.profiles(id) on delete cascade,
-  file_name text not null,
-  file_path text not null,
-  doc_type text not null,
-  status text default 'Uploaded',
-  office text default 'dubai',
-  created_at timestamp with time zone default timezone('utc'::text, now()) not null
-);
-
-do $$
-begin
-  if not exists (select 1 from information_schema.columns where table_name = 'documents' and column_name = 'office') then
-    alter table public.documents add column office text default 'dubai';
-  end if;
-end $$;
-
-alter table public.documents enable row level security;
-
-drop policy if exists "Users can view own documents" on public.documents;
-drop policy if exists "Users can insert own documents" on public.documents;
-drop policy if exists "Admins can view all documents" on public.documents;
-drop policy if exists "Admins can update all documents" on public.documents;
-drop policy if exists "Service role full access documents" on public.documents;
-
-create policy "Users can view own documents"
-on public.documents for select
-using ( auth.uid() = user_id );
-
-create policy "Users can insert own documents"
-on public.documents for insert
-with check ( auth.uid() = user_id );
-
-create policy "Admins can view all documents"
-on public.documents for select
-using (
-  exists (
-    select 1 from public.profiles
-    where profiles.id = auth.uid()
-    and profiles.role = 'admin'
-  )
-);
-
-create policy "Admins can update all documents"
-on public.documents for update
-using (
-  exists (
-    select 1 from public.profiles
-    where profiles.id = auth.uid()
-    and profiles.role = 'admin'
-  )
-);
-
-create policy "Service role full access documents"
-on public.documents for all
-using ( auth.role() = 'service_role' )
-with check ( auth.role() = 'service_role' );
-
--- ============ 3. APPLICATIONS ============
+-- ============ 2. APPLICATIONS ============
+-- (created before documents, since documents.application_id references this table)
 
 create table if not exists public.applications (
   id uuid default gen_random_uuid() primary key,
@@ -224,6 +164,75 @@ using (
 
 create policy "Service role full access applications"
 on public.applications for all
+using ( auth.role() = 'service_role' )
+with check ( auth.role() = 'service_role' );
+
+-- ============ 3. DOCUMENTS ============
+
+create table if not exists public.documents (
+  id uuid default gen_random_uuid() primary key,
+  user_id uuid not null references public.profiles(id) on delete cascade,
+  file_name text not null,
+  file_path text not null,
+  doc_type text not null,
+  status text default 'Uploaded',
+  office text default 'dubai',
+  application_id uuid references public.applications(id) on delete cascade,
+  uploaded_by text default 'client', -- 'client' or 'admin'
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+do $$
+begin
+  if not exists (select 1 from information_schema.columns where table_name = 'documents' and column_name = 'office') then
+    alter table public.documents add column office text default 'dubai';
+  end if;
+  if not exists (select 1 from information_schema.columns where table_name = 'documents' and column_name = 'application_id') then
+    alter table public.documents add column application_id uuid references public.applications(id) on delete cascade;
+  end if;
+  if not exists (select 1 from information_schema.columns where table_name = 'documents' and column_name = 'uploaded_by') then
+    alter table public.documents add column uploaded_by text default 'client';
+  end if;
+end $$;
+
+alter table public.documents enable row level security;
+
+drop policy if exists "Users can view own documents" on public.documents;
+drop policy if exists "Users can insert own documents" on public.documents;
+drop policy if exists "Admins can view all documents" on public.documents;
+drop policy if exists "Admins can update all documents" on public.documents;
+drop policy if exists "Service role full access documents" on public.documents;
+
+create policy "Users can view own documents"
+on public.documents for select
+using ( auth.uid() = user_id );
+
+create policy "Users can insert own documents"
+on public.documents for insert
+with check ( auth.uid() = user_id );
+
+create policy "Admins can view all documents"
+on public.documents for select
+using (
+  exists (
+    select 1 from public.profiles
+    where profiles.id = auth.uid()
+    and profiles.role = 'admin'
+  )
+);
+
+create policy "Admins can update all documents"
+on public.documents for update
+using (
+  exists (
+    select 1 from public.profiles
+    where profiles.id = auth.uid()
+    and profiles.role = 'admin'
+  )
+);
+
+create policy "Service role full access documents"
+on public.documents for all
 using ( auth.role() = 'service_role' )
 with check ( auth.role() = 'service_role' );
 

@@ -54,6 +54,52 @@ export async function POST(request: Request) {
   }
 }
 
+export async function PATCH(request: Request) {
+  const session = await getServerSession(authOptions);
+  if (!session || !session.user?.email) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  let userId = (session.user as any).id;
+  if (!userId) {
+     const { data: profile } = await supabaseAdmin
+      .from('profiles')
+      .select('id')
+      .eq('email', session.user.email)
+      .single();
+     if (profile) userId = profile.id;
+  }
+
+  if (!userId) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+  }
+
+  try {
+      const body = await request.json();
+      const { id, formData } = body;
+
+      if (!id) {
+          return NextResponse.json({ error: 'ID required' }, { status: 400 });
+      }
+
+      const { data, error } = await supabaseAdmin
+          .from('applications')
+          .update({ form_data: formData })
+          .eq('id', id)
+          .eq('user_id', userId)
+          .eq('office', 'astana')
+          .select()
+          .single();
+
+      if (error) throw error;
+
+      return NextResponse.json({ success: true, application: data });
+  } catch (error: any) {
+      console.error('Update Application Error:', error);
+      return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
+
 export async function DELETE(request: Request) {
     const session = await getServerSession(authOptions);
     if (!session || !session.user?.email) {
