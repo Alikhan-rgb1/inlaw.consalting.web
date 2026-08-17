@@ -69,7 +69,7 @@ export function AstanaApplicationSummary({ formData }: { formData: any }) {
       </section>
 
       <section>
-        <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3 border-b border-slate-200 pb-1">5. Физические лица</h4>
+        <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3 border-b border-slate-200 pb-1">5. Сотрудники (физические лица)</h4>
         {individuals.length === 0 ? (
           <p className="text-sm text-slate-500 italic">Не указаны.</p>
         ) : (

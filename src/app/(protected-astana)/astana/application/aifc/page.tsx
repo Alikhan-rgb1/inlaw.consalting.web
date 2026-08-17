@@ -119,12 +119,12 @@ function AifcApplicationForm() {
       no: 'No',
       s4: '4. REGISTRATION CODE ADDRESS',
       registrationCodeAddress: 'Registration Code Address',
-      s5: '5. CORPORATE STRUCTURE — INDIVIDUALS',
+      s5: '5. CORPORATE STRUCTURE — STAFF (INDIVIDUALS)',
       s5Hint: 'Add every director, shareholder, secretary or authorised signatory. Personal ID details are taken from the uploaded ID/passport scan below — no need to retype them here.',
       person: 'Person',
       fullName: 'Full name',
       iin: 'Tax ID (IIN)',
-      roles: 'Role(s)',
+      roles: 'Role(s) (required)',
       contactEmail: 'Contact email',
       contactPhone: 'Contact phone',
       sharesCount: 'Number of shares',
@@ -209,12 +209,12 @@ function AifcApplicationForm() {
       no: 'Нет',
       s4: '4. РЕГИСТРАЦИОННЫЙ КОД АДРЕСА',
       registrationCodeAddress: 'Registration Code Address',
-      s5: '5. КОРПОРАТИВНАЯ СТРУКТУРА — ФИЗИЧЕСКИЕ ЛИЦА',
+      s5: '5. КОРПОРАТИВНАЯ СТРУКТУРА — СОТРУДНИКИ (ФИЗИЧЕСКИЕ ЛИЦА)',
       s5Hint: 'Добавьте каждого директора, акционера, секретаря или уполномоченное лицо. Персональные данные документа берутся из загруженного ниже скана удостоверения/паспорта — повторно вводить их не нужно.',
       person: 'Человек',
       fullName: 'ФИО',
       iin: 'Налоговый идентификационный номер (ИИН)',
-      roles: 'Роль(и)',
+      roles: 'Роль(и) (обязательно)',
       contactEmail: 'Email для связи',
       contactPhone: 'Телефон для связи',
       sharesCount: 'Количество акций',
@@ -299,12 +299,12 @@ function AifcApplicationForm() {
       no: '否',
       s4: '4. 注册地址代码',
       registrationCodeAddress: '注册地址代码 (Registration Code Address)',
-      s5: '5. 公司结构 — 个人信息',
+      s5: '5. 公司结构 — 员工（个人信息）',
       s5Hint: '请添加每一位董事、股东、秘书或授权签字人。个人证件信息以下方上传的证件/护照扫描件为准，无需重复填写。',
       person: '人员',
       fullName: '全名',
       iin: '税务识别号 (IIN)',
-      roles: '角色',
+      roles: '角色（必填）',
       contactEmail: '联系邮箱',
       contactPhone: '联系电话',
       sharesCount: '股份数量',
@@ -420,7 +420,9 @@ function AifcApplicationForm() {
     );
   };
 
-  const addActivity = () => setActivities((prev) => [...prev, createEmptyActivity()]);
+  const MAX_ACTIVITIES = 3;
+
+  const addActivity = () => setActivities((prev) => (prev.length >= MAX_ACTIVITIES ? prev : [...prev, createEmptyActivity()]));
   const removeActivity = (id: string) => setActivities((prev) => prev.filter((a) => a.id !== id));
   const updateActivity = (id: string, field: keyof Activity, value: string) => {
     setActivities((prev) => prev.map((a) => (a.id === id ? { ...a, [field]: value } : a)));
@@ -575,7 +577,13 @@ function AifcApplicationForm() {
                                   </div>
                                   <div>
                                       <label className={labelClass}>{pctLabel}:</label>
-                                      <input type="text" value={act.percentage} onChange={(e) => updateActivity(act.id, 'percentage', e.target.value)} className={inputClass} />
+                                      <input
+                                        type="text"
+                                        inputMode="numeric"
+                                        value={act.percentage}
+                                        onChange={(e) => updateActivity(act.id, 'percentage', e.target.value.replace(/\D/g, ''))}
+                                        className={inputClass}
+                                      />
                                   </div>
                                   {activities.length > 1 && (
                                     <button
@@ -589,13 +597,15 @@ function AifcApplicationForm() {
                               </div>
                             );
                           })}
-                          <button
-                            type="button"
-                            onClick={addActivity}
-                            className="text-sm font-medium text-indigo-600 hover:text-indigo-800 inline-flex items-center gap-1"
-                          >
-                            + {t.addActivity}
-                          </button>
+                          {activities.length < MAX_ACTIVITIES && (
+                            <button
+                              type="button"
+                              onClick={addActivity}
+                              className="text-sm font-medium text-indigo-600 hover:text-indigo-800 inline-flex items-center gap-1"
+                            >
+                              + {t.addActivity}
+                            </button>
+                          )}
                       </div>
                   </div>
               </section>
